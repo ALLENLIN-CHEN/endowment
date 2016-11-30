@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.scut.mychart.mapper.RegisterMapper">
+	<!-- 开启二级缓存 -->
+	<cache size="1024" readOnly="true" />
+	
+	<select id="getCountByGender" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
+		<![CDATA[
+			select year(h.operation_time) as year, p.sex as sex, count(*) as sum 
+			from hospital_business h, person p 
+			where h.operation = #{0} and h.social_security_card = p.social_security_card 
+			group by year, sex 
+			order by year
+		]]>
+	</select>
+	
+</mapper>

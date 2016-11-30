@@ -7,6 +7,17 @@ import java.util.List;
  * Created by gzw on 2016/7/15.
  */
 public class DictionaryString {
+	
+	/**
+	 * 用于用卡分析Constant
+	 */
+	public static final String MALE = "男";
+	public static final String FEMALE = "女";
+	public static final String BUSINESS_REGISTER = "挂号";
+	public static final String REGISTER_BAR_X = "REGISTER_BAR_X";
+	public static final String REGISTER_LINE = "REGISTER_LINE";
+	
+	
     static public final String MAP="MAP";
     static public final String MAP_SUBMODE="MAP_SUBMODE";
     static public final String MAP_MARKPOINT="MAP_MARKPOINT";
