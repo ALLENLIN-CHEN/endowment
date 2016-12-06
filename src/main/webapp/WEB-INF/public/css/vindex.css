@@ -100,6 +100,25 @@
 	left: 24%;
 }
 
+.right-content .time_wrap {
+	height: 36px;
+	display: none;
+}
+
+.right-content .time_wrap label {
+	height: 36px;
+    margin: 0;
+    line-height: 36px;
+}
+
+.right-content .time_wrap .startTime {
+	width: 65%;
+}
+
+.right-content .time_wrap .endTime {
+	width: 65%;
+}
+
 .right-content .single {
 	width: 100%;	
 	visibility: hidden;
@@ -107,7 +126,7 @@
 
 .right-content .single #chartMain {
 	width: 100%;
-	height: 500px;
+	height: 550px;
 }
 
 .right-content .multi {
@@ -121,6 +140,10 @@
 	height: 300px;
 	flex-grow: 1;
 	padding-right: 20px;
+}
+
+.right-content .area-wrap {
+	display: none;
 }
 
 /* 用于设置加载动画loading */

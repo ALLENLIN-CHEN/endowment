@@ -16,6 +16,17 @@ public class DictionaryString {
 	public static final String BUSINESS_REGISTER = "挂号";
 	public static final String REGISTER_BAR_X = "REGISTER_BAR_X";
 	public static final String REGISTER_LINE = "REGISTER_LINE";
+	public static final String REGISTER_GAUGE = "REGISTER_GAUGE";
+	public static final String REGISTER_FUNNEL = "REGISTER_FUNNEL";
+	public static final String REGISTER_BAR_HOSPITAL_TOTAL = "REGISTER_BAR_HOSPITAL_TOTAL";
+	public static final String REGISTER_BAR_HOSPITAL_PERCENT = "REGISTER_BAR_HOSPITAL_PERCENT";
+	public static final String REGISTER_BAR_DEPARTMENT_TOTAL = "REGISTER_BAR_DEPARTMENT_TOTAL";
+	public static final String REGISTER_BAR_DEPARTMENT_PERCENT = "REGISTER_BAR_DEPARTMENT_PERCENT";
+	
+	public static final String CHILD = "child";
+	public static final String YOUTH = "youth";
+	public static final String MIDLIFE = "midlife";
+	public static final String OLDER = "older";
 	
 	
     static public final String MAP="MAP";

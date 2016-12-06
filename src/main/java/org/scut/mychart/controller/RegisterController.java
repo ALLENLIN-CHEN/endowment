@@ -27,5 +27,47 @@ public class RegisterController {
     public Map<String, Object> getCountByGenderLine(){
 		Map<String, Object> result = registerService.getCountByGenderLine();
 		return result;
-    }  
+    } 
+	
+	@RequestMapping("/areaCoverage")
+    @ResponseBody
+    public Map<String, Object> getAreaCoverage(){
+		Map<String, Object> result = registerService.getAreaCoverage();
+		return result;
+    } 
+	
+	@RequestMapping("/ageRange")
+    @ResponseBody
+    public Map<String, Object> getAgeRange(){
+		Map<String, Object> result = registerService.getAgeRange();
+		return result;
+    } 
+
+	@RequestMapping("/hospitalTotal")
+	@ResponseBody
+	public Map<String, Object> getHospitalTotal(){
+		Map<String, Object> result = registerService.getHospitalTotal();
+		return result;
+	} 
+
+	@RequestMapping("/hospitalPercent")
+	@ResponseBody
+	public Map<String, Object> getHospitalPercent(int startTime, int endTime){
+		Map<String, Object> result = registerService.getHospitalPercent(startTime, endTime);
+		return result;
+	} 
+	
+	@RequestMapping("/departmentTotal")
+	@ResponseBody
+	public Map<String, Object> getDepartmentTotal(){
+		Map<String, Object> result = registerService.getDepartmentTotal();
+		return result;
+	}
+	
+	@RequestMapping("/departmentPercent")
+	@ResponseBody
+	public Map<String, Object> getDepartmentPercent(int startTime, int endTime){
+		Map<String, Object> result = registerService.getDepartmentPercent(startTime, endTime);
+		return result;
+	} 
 }
