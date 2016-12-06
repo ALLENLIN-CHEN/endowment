@@ -205,6 +205,8 @@ function handleCharts(data) {
 		myChart.on('timelinechanged',changeLegendShowByTimeLine);
 	} else if(data.type === 'REGISTER_BAR_DEPARTMENT_TOTAL') {
 		myChart.on('timelinechanged',changeLegendShowByTimeLine);
+	} else if(data.type === 'REGISTER_BAR_DOCTOR_TOTAL') {
+		myChart.on('timelinechanged',changeLegendShowByTimeLine);
 	}
 }
 
@@ -240,6 +242,16 @@ function changeLegendShowByTimeLine(timeLineData) {
 		option.baseOption.tooltip.formatter = function(v) {
 			var i = v[0].dataIndex;
 			return option.extended.hospitals[index][i] + "-" + option.extended.departments[index][i] + "</br>数量: " + option.options[index-2010].series[0].data[i];
+		};
+		myChart.setOption(option);
+	} else if(chartType === 'REGISTER_BAR_DOCTOR_TOTAL') {
+		var legends = [];
+		var index = timeLineData.currentIndex + 2010;
+		legends = option.extended.doctors[index];
+		option.baseOption.xAxis[0].data = legends;
+		option.baseOption.tooltip.formatter = function(v) {
+			var i = v[0].dataIndex;
+			return option.extended.hospitalsAndDepartments[index][i] + '-' + option.extended.doctors[index][i] + "</br>数量: " + option.options[index-2010].series[0].data[i];
 		};
 		myChart.setOption(option);
 	}

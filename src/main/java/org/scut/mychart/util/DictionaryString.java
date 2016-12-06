@@ -22,6 +22,8 @@ public class DictionaryString {
 	public static final String REGISTER_BAR_HOSPITAL_PERCENT = "REGISTER_BAR_HOSPITAL_PERCENT";
 	public static final String REGISTER_BAR_DEPARTMENT_TOTAL = "REGISTER_BAR_DEPARTMENT_TOTAL";
 	public static final String REGISTER_BAR_DEPARTMENT_PERCENT = "REGISTER_BAR_DEPARTMENT_PERCENT";
+	public static final String REGISTER_BAR_DOCTOR_TOTAL = "REGISTER_BAR_DOCTOR_TOTAL";
+	public static final String REGISTER_BAR_DOCTOR_PERCENT = "REGISTER_BAR_DOCTOR_PERCENT";
 	
 	public static final String CHILD = "child";
 	public static final String YOUTH = "youth";
