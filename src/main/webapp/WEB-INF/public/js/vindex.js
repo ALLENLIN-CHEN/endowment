@@ -59,6 +59,7 @@ $(function() {
 		if(isInit) {
 			//这样写是为了能够让echarts能够得到所设置的width，而不是使用默认的width。 设置完毕后进行hide隐藏掉
 			$('.right-content .single').css('visibility','visible').hide();
+			isInit = !isInit;
 		}
 		
 		showLoading();
