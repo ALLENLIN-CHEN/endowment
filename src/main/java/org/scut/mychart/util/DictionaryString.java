@@ -6,6 +6,9 @@ import java.util.List;
 /**
  * Created by gzw on 2016/7/15.
  */
+/**
+ * 修改 by linqidi on 2016/12/9.
+ */
 public class DictionaryString {
 	
 	/**
@@ -14,6 +17,8 @@ public class DictionaryString {
 	public static final String MALE = "男";
 	public static final String FEMALE = "女";
 	public static final String BUSINESS_REGISTER = "挂号";
+    public static final String BUSINESS_TSYL = "特殊医疗待遇申请";
+
 	public static final String REGISTER_BAR_X = "REGISTER_BAR_X";
 	public static final String REGISTER_LINE = "REGISTER_LINE";
 	public static final String REGISTER_GAUGE = "REGISTER_GAUGE";
@@ -24,6 +29,14 @@ public class DictionaryString {
 	public static final String REGISTER_BAR_DEPARTMENT_PERCENT = "REGISTER_BAR_DEPARTMENT_PERCENT";
 	public static final String REGISTER_BAR_DOCTOR_TOTAL = "REGISTER_BAR_DOCTOR_TOTAL";
 	public static final String REGISTER_BAR_DOCTOR_PERCENT = "REGISTER_BAR_DOCTOR_PERCENT";
+
+    public static final String TSYL_BAR_X = "TSYL_BAR_X";
+    public static final String TSYL_LINE = "TSYL_LINE";
+    public static final String TSYL_GAUGE = "TSYL_GAUGE";
+    public static final String TSYL_FUNNEL = "TSYL_FUNNEL";
+    public static final String TSYL_BAR_HOSPITAL_TOTAL = "TSYL_BAR_HOSPITAL_TOTAL";
+    public static final String TSYL_BAR_DEPARTMENT_TOTAL = "TSYL_BAR_DEPARTMENT_TOTAL";
+
 	
 	public static final String CHILD = "child";
 	public static final String YOUTH = "youth";
