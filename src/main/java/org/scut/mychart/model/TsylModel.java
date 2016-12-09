@@ -96,11 +96,7 @@ public class TsylModel {
         this.department = department;
     }
 
-    public String getDoctor() {
-        return doctor;
-    }
 
-    public void setDoctor(String doctor) {
-        this.doctor = doctor;
-    }
+
+
 }
