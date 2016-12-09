@@ -4,7 +4,9 @@
  var timer = null; //主要用于仪表盘等定时器的句柄，每当新的展示需要重置操作
  var isInit = true; //用于初始化处理单独显示的div宽高获取不到的情况
  var isAreaChange = false; //用于判断是否切换了地区
-
+ /**
+  * Created by linqidi on 2016/12/9.
+  */
 $(function() {
 	hideLoading();
 	
