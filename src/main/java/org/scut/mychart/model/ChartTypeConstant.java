@@ -85,4 +85,34 @@ public interface ChartTypeConstant {
 
 	//字符云
 	public static final String WORDCLOUD_REDIS = "WORDCLOUD_REDIS";
+
+	//hospital_2_2
+	public static final String HOSPITAL_2_2_REDIS = "HOSPITAL_2_2_REDIS";
+
+	//hospital_2_3
+	public static final String HOSPITAL_2_3_REDIS = "HOSPITAL_2_3_REDIS";
+
+	//hospital_2_4
+	public static final String HOSPITAL_2_4_REDIS = "HOSPITAL_2_4_REDIS";
+
+	//hospital_2_5
+	public static final String HOSPITAL_2_5_REDIS = "HOSPITAL_2_5_REDIS";
+
+	//hospital_2_6
+	public static final String HOSPITAL_2_6_REDIS = "HOSPITAL_2_6_REDIS";
+
+	//hospital_2_8
+	public static final String HOSPITAL_2_8_REDIS = "HOSPITAL_2_8_REDIS";
+
+	//hospital_2_10
+	public static final String HOSPITAL_2_10_REDIS = "HOSPITAL_2_10_REDIS";
+
+	//hospital_2_7
+	public static final String HOSPITAL_2_7_REDIS = "HOSPITAL_2_7_REDIS";
+
+	//hospital_2_9
+	public static final String HOSPITAL_2_9_REDIS = "HOSPITAL_2_9_REDIS";
+
+	//hospital_2_11
+	public static final String HOSPITAL_2_11_REDIS = "HOSPITAL_2_11_REDIS";
 }
