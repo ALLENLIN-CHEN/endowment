@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import javax.swing.plaf.DesktopIconUI;
 
 import org.scut.mychart.mapper.CompanyMapper;
-import org.scut.mychart.model.RegisterModel;
+import org.scut.mychart.model.CompanyModel;
 import org.scut.mychart.service.CompanyService;
 import org.scut.mychart.util.DictionaryString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,16 @@ import org.springframework.stereotype.Service;
 public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
-	private CompanyMapper registerMapper;
+	private CompanyMapper companyMapper;
 	
 	@Override
 	public Map<String, Object> getCountByGender() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<RegisterModel> data = registerMapper.getCountByGender(DictionaryString.BUSINESS_REGISTER);
+		List<CompanyModel> data = companyMapper.getCountByGender();
 		List<Integer> maleCount = new ArrayList<Integer>();
 		List<Integer> femaleCount = new ArrayList<Integer>();
 		
-		for(RegisterModel m : data) {
+		for(CompanyModel m : data) {
 			if(m.getSex().equals(DictionaryString.MALE)) {
 				maleCount.add(m.getSum());
 			}else if(m.getSex().equals(DictionaryString.FEMALE)) {
@@ -48,31 +48,16 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<String, Object> getCountByGenderLine() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<RegisterModel> data = registerMapper.getCountByGender(DictionaryString.BUSINESS_REGISTER);
-		List<Integer> maleCount = new ArrayList<Integer>();
-		List<Integer> femaleCount = new ArrayList<Integer>();
-		
-		for(RegisterModel m : data) {
-			if(m.getSex().equals(DictionaryString.MALE)) {
-				maleCount.add(m.getSum());
-			}else if(m.getSex().equals(DictionaryString.FEMALE)) {
-				femaleCount.add(m.getSum());
-			}
-		}
-		
-		result.put("type", DictionaryString.REGISTER_LINE);
-		result.put("male", maleCount);
-		result.put("female", femaleCount);
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getAreaCoverage() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<RegisterModel> data = registerMapper.getAreaCoverage(DictionaryString.BUSINESS_REGISTER);
+		List<CompanyModel> data = companyMapper.getAreaCoverage(DictionaryString.BUSINESS_REGISTER);
 		Map<String, Integer> total = new HashMap<String, Integer>();
 		String temp = "";
-		for(RegisterModel m : data) {
+		for(CompanyModel m : data) {
 			temp = String.valueOf(m.getYear());
 			if(total.containsKey(temp)) {
 				total.put(temp, total.get(temp) + m.getSum());
@@ -85,7 +70,7 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		DecimalFormat df = new DecimalFormat("#.##");
 		
-		for(RegisterModel m : data) {
+		for(CompanyModel m : data) {
 			temp = String.valueOf(m.getYear());
 			m.setCoverage((double)m.getSum() / total.get(temp) * 100);
 			if(coverage.containsKey(m.getArea())) {
@@ -104,11 +89,11 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<String, Object> getAgeRange() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<RegisterModel> data = registerMapper.getAgeRange(DictionaryString.BUSINESS_REGISTER);
+		List<CompanyModel> data = companyMapper.getAgeRange(DictionaryString.BUSINESS_REGISTER);
 		
 		Map<String, Map<String, Integer>> dataSet = new HashMap<String, Map<String,Integer>>();
 		String temp = "";
-		for(RegisterModel m : data) {
+		for(CompanyModel m : data) {
 			temp = String.valueOf(m.getYear());
 			if(dataSet.containsKey(temp)) {
 				dataSet.get(temp).put("total", dataSet.get(temp).get("total") + m.getSum());
@@ -153,10 +138,10 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<String, Object> getHospitalTotal() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<RegisterModel> data = registerMapper.getHospitalTotal(DictionaryString.BUSINESS_REGISTER);
-		Map<String, List<RegisterModel>> total = new HashMap<String, List<RegisterModel>>();
+		List<CompanyModel> data = companyMapper.getHospitalTotal(DictionaryString.BUSINESS_REGISTER);
+		Map<String, List<CompanyModel>> total = new HashMap<String, List<CompanyModel>>();
 		String temp = "";
-		for(RegisterModel m : data) {
+		for(CompanyModel m : data) {
 			temp = String.valueOf(m.getYear());
 			if(total.containsKey(temp)) {
 				if(total.get(temp).size() >= 10) {
@@ -165,7 +150,7 @@ public class CompanyServiceImpl implements CompanyService {
 				
 				total.get(temp).add(m);
 			}else {
-				total.put(temp, new ArrayList<RegisterModel>());
+				total.put(temp, new ArrayList<CompanyModel>());
 				total.get(temp).add(m);
 			}
 		}
@@ -180,15 +165,15 @@ public class CompanyServiceImpl implements CompanyService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String stime = startTime + "-01-01";
 		String etime = endTime + "-12-31";
-		List<RegisterModel> total = registerMapper.getHospitalByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		List<RegisterModel> day = registerMapper.getHospitalMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
+		List<CompanyModel> total = companyMapper.getHospitalByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
+		List<CompanyModel> day = companyMapper.getHospitalMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
 		Map<String, Double> per = new HashMap<String, Double>();
 		
 		DecimalFormat df = new DecimalFormat("#.##");
 		double calPer = 0.0;
-		RegisterModel d = null;
+		CompanyModel d = null;
 		int index = 0;
-		for(RegisterModel m : total) {
+		for(CompanyModel m : total) {
 			d = day.get(index);
 			calPer = (double)m.getSum() / (d.getMaxNum() * 365 * (endTime - startTime + 1)) * 100;
 			per.put(m.getHospital(), Double.valueOf(df.format(calPer)));
@@ -220,10 +205,10 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<String, Object> getDepartmentTotal() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<RegisterModel> data = registerMapper.getDepartmentTotal(DictionaryString.BUSINESS_REGISTER);
-		Map<String, List<RegisterModel>> total = new HashMap<String, List<RegisterModel>>();
+		List<CompanyModel> data = companyMapper.getDepartmentTotal(DictionaryString.BUSINESS_REGISTER);
+		Map<String, List<CompanyModel>> total = new HashMap<String, List<CompanyModel>>();
 		String temp = "";
-		for(RegisterModel m : data) {
+		for(CompanyModel m : data) {
 			temp = String.valueOf(m.getYear());
 			if(total.containsKey(temp)) {
 				if(total.get(temp).size() >= 10) {
@@ -232,7 +217,7 @@ public class CompanyServiceImpl implements CompanyService {
 				
 				total.get(temp).add(m);
 			}else {
-				total.put(temp, new ArrayList<RegisterModel>());
+				total.put(temp, new ArrayList<CompanyModel>());
 				total.get(temp).add(m);
 			}
 		}
@@ -247,11 +232,11 @@ public class CompanyServiceImpl implements CompanyService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String stime = startTime + "-01-01";
 		String etime = endTime + "-12-31";
-		List<RegisterModel> total = registerMapper.getDepartmentByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		List<RegisterModel> day = registerMapper.getDepartmentMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
+		List<CompanyModel> total = companyMapper.getDepartmentByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
+		List<CompanyModel> day = companyMapper.getDepartmentMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
 		Map<String, Double> per = new HashMap<String, Double>();
 		Map<String, Integer> totalMap = new HashMap<String, Integer>();
-		for(RegisterModel m : total) {
+		for(CompanyModel m : total) {
 			String key = m.getHospital() + "-" + m.getDepartment();
 			if(!totalMap.containsKey(key)) {
 				totalMap.put(key, m.getSum());
@@ -260,7 +245,7 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		DecimalFormat df = new DecimalFormat("#.##");
 		double calPer = 0.0;
-		for(RegisterModel m : day) {
+		for(CompanyModel m : day) {
 			String key = m.getHospital() + "-" + m.getDepartment();
 			if(totalMap.containsKey(key)) {
 				calPer = (double)totalMap.get(key) / (m.getMaxNum() * 365 * (endTime - startTime + 1)) * 100;
@@ -293,10 +278,10 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<String, Object> getDoctorTotal() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<RegisterModel> data = registerMapper.getDoctorTotal(DictionaryString.BUSINESS_REGISTER);
-		Map<String, List<RegisterModel>> total = new HashMap<String, List<RegisterModel>>();
+		List<CompanyModel> data = companyMapper.getDoctorTotal(DictionaryString.BUSINESS_REGISTER);
+		Map<String, List<CompanyModel>> total = new HashMap<String, List<CompanyModel>>();
 		String temp = "";
-		for(RegisterModel m : data) {
+		for(CompanyModel m : data) {
 			temp = String.valueOf(m.getYear());
 			if(total.containsKey(temp)) {
 				if(total.get(temp).size() >= 10) {
@@ -305,7 +290,7 @@ public class CompanyServiceImpl implements CompanyService {
 				
 				total.get(temp).add(m);
 			}else {
-				total.put(temp, new ArrayList<RegisterModel>());
+				total.put(temp, new ArrayList<CompanyModel>());
 				total.get(temp).add(m);
 			}
 		}
@@ -321,11 +306,11 @@ public class CompanyServiceImpl implements CompanyService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String stime = startTime + "-01-01";
 		String etime = endTime + "-12-31";
-		List<RegisterModel> total = registerMapper.getDoctorByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		List<RegisterModel> day = registerMapper.getDoctorMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
+		List<CompanyModel> total = companyMapper.getDoctorByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
+		List<CompanyModel> day = companyMapper.getDoctorMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
 		Map<String, Double> per = new HashMap<String, Double>();
 		Map<String, Integer> totalMap = new HashMap<String, Integer>();
-		for(RegisterModel m : total) {
+		for(CompanyModel m : total) {
 			String key = m.getHospital() + "-" + m.getDepartment() + "-" + m.getDoctor();
 			if(!totalMap.containsKey(key)) {
 				totalMap.put(key, m.getSum());
@@ -334,7 +319,7 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		DecimalFormat df = new DecimalFormat("#.##");
 		double calPer = 0.0;
-		for(RegisterModel m : day) {
+		for(CompanyModel m : day) {
 			String key = m.getHospital() + "-" + m.getDepartment() + "-" + m.getDoctor();
 			if(totalMap.containsKey(key)) {
 				calPer = (double)totalMap.get(key) / (m.getMaxNum() * 365 * (endTime - startTime + 1)) * 100;
