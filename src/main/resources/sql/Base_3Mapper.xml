@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.scut.mychart.mapper.Base_3Mapper">
+	<!-- 开启二级缓存 -->
+	<cache size="1024" readOnly="true" />
+	<select id="selectBase_3_2" parameterType="java.util.Map" resultType="org.scut.mychart.model.Base_3" statementType="STATEMENT">
+		SELECT year(base_date) as year,financial_type as financial_type,sex as sex, count(distinct company_social_security.social_security_card) as person_num FROM company_social_security
+        join person on company_social_security.social_security_card = person.social_security_card
+        group by year,financial_type,sex
+        order by financial_type,year,sex
+	</select>
+	<select id="selectBase_3_3" parameterType="java.util.Map" resultType="org.scut.mychart.model.Base_3" statementType="STATEMENT">
+        select year(base_date) as "year",
+		case when (year(base_date)-year(birthday)>50) then "50岁以上"
+		when (year(base_date)-year(birthday)>40) then "40岁--50岁"
+		when (year(base_date)-year(birthday)>30) then "30岁--40岁"
+        when (year(base_date)-year(birthday)>25) then "25岁--30岁"
+        when (year(base_date)-year(birthday)>22) then "22岁--25岁"
+		else "18--22岁" end as "age",
+		count(distinct person.social_security_card) as "person_num"
+		from company_social_security inner join person
+		on company_social_security.social_security_card=person.social_security_card
+		where financial_type = "${financial}"
+		group by year,age
+		order by year,age
+	</select>
+	<select id="selectBase_3_4" parameterType="java.util.Map" resultType="org.scut.mychart.model.Base_3" statementType="STATEMENT">
+		SELECT year(base_date) as year,financial_type as financial_type,
+        sum(social_insurance_base)/count(company_social_security.social_security_card) as base
+        FROM company_social_security
+        join person on company_social_security.social_security_card = person.social_security_card
+        group by year,financial_type
+        order by year,base DESC
+	</select>
+	<select id="selectBase_3" parameterType="java.util.Map" resultType="org.scut.mychart.model.Base_3" statementType="STATEMENT">
+		SELECT financial_type as financial_type
+        FROM company_social_security
+        group by financial_type
+	</select>
+</mapper>
