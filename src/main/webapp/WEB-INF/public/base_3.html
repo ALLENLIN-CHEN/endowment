@@ -71,7 +71,7 @@
 					</div>
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
-						<div class="type" data-url="charts/base_3/base_3_3" data-no-init="1">各经济类型出参保人员个年龄段占比</div>
+						<div class="type" data-url="charts/base_3/base_3_3" data-no-init="1" onclick="getFinancials()">各经济类型出参保人员个年龄段占比</div>
 					</div>
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
@@ -86,19 +86,20 @@
 				<div class="form-group clearfix">
 					<label class="control-label col-sm-2" >经济类型</label>
 					<div class="col-sm-2">
-						<select class="form-control startTime" style="width:150px;">
+						<select id="getF" class="form-control startTime" style="width:150px;">
 							<script type="text/javascript">
-								var data;
-								$.ajax({
-									type:'get',
-									async:false,
-									url:"charts/base_3/financial",
-									success:function(value){
-										data=value;
-									}
-								});
-								for(var index in data){
-									document.writeln("<option value=\'"+data[index]+"\'>"+data[index]+"</option>");
+								function getFinancials() {
+									$.ajax({
+										type:'get',
+										url:"charts/base_3/financial",
+										success:function(value){
+											var financials;
+											for(var index in value){
+												financials+="<option value=\'"+value[index]+"\'>"+value[index]+"</option>"
+											}
+											document.getElementById("getF").innerHTML=financials;
+										}
+									});
 								}
 							</script>
 						</select>
