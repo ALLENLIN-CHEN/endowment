@@ -1,7 +1,7 @@
 package org.scut.mychart.controller;
 
 import org.scut.mychart.service.ProofService;
-import org.scut.mychart.service.RegisterService;
+import org.scut.mychart.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

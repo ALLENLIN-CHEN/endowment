@@ -11,18 +11,18 @@ import java.util.Map.Entry;
 
 import javax.swing.plaf.DesktopIconUI;
 
-import org.scut.mychart.mapper.RegisterMapper;
+import org.scut.mychart.mapper.CompanyMapper;
 import org.scut.mychart.model.RegisterModel;
-import org.scut.mychart.service.RegisterService;
+import org.scut.mychart.service.CompanyService;
 import org.scut.mychart.util.DictionaryString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegisterServiceImpl implements RegisterService {
+public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
-	private RegisterMapper registerMapper;
+	private CompanyMapper registerMapper;
 	
 	@Override
 	public Map<String, Object> getCountByGender() {

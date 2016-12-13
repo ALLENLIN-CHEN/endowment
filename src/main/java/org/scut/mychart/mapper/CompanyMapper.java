@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.scut.mychart.model.RegisterModel;
 
-public interface RegisterMapper {
+public interface CompanyMapper {
 	
 	public List<RegisterModel> getCountByGender(String business);
 	
