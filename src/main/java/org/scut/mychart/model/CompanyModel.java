@@ -1,6 +1,6 @@
 package org.scut.mychart.model;
 
-public class RegisterModel {
+public class CompanyModel {
 	private int year;
 	
 	private String sex;
