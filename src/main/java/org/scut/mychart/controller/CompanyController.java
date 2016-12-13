@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value="/charts/register", produces="application/json;charset=UTF-8")
-public class RegisterController {
+public class CompanyController {
 	
 	@Autowired
 	private RegisterService registerService;
