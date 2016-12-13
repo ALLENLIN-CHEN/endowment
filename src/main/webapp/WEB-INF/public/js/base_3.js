@@ -217,10 +217,10 @@ function getBase_3_4(data) {
 		financial_types = data.financial_type[0].financial_name;
 		timeLineOptions.push({
 			title : {text: times[index]+'各经济类型参保基数TOP10'},
-			yAxis : [
+			xAxis : [
 				{
 					type : 'category',
-					inverse: true,
+					//inverse: true,
 					axisTick : {show: false},
 					data : data.financial_type[index].financial_name
 				}
@@ -298,12 +298,34 @@ function getBase_3_4(data) {
 			],
 			yAxis : [
 				{
-					data : []
+					type : 'value'
 				}
 			],
 			series :  [
 				{
-					type: 'bar'
+					type: 'bar',
+					itemStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(
+								0, 0, 0, 1,
+								[
+									{offset: 0, color: '#83bff6'},
+									{offset: 0.5, color: '#188df0'},
+									{offset: 1, color: '#188df0'}
+								]
+							)
+						},
+						emphasis: {
+							color: new echarts.graphic.LinearGradient(
+								0, 0, 0, 1,
+								[
+									{offset: 0, color: '#2378f7'},
+									{offset: 0.7, color: '#2378f7'},
+									{offset: 1, color: '#83bff6'}
+								]
+							)
+						}
+					},
 				}
 			]
 		},

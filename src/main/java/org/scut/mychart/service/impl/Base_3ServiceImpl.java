@@ -115,12 +115,12 @@ public class Base_3ServiceImpl implements Base_3Service {
 				base.add(list.getBase());
 
 				String label ="";
-				if(list.getFinancial_type().length()>8){
-					int n=list.getFinancial_type().length()/8;
+				if(list.getFinancial_type().length()>5){
+					int n=list.getFinancial_type().length()/5;
 					for(int nn=0;nn<n;nn++){
-						label+=list.getFinancial_type().substring(8*nn,8*nn+8)+"\n";
+						label+=list.getFinancial_type().substring(5*nn,5*nn+5)+"\n";
 					}
-					label+=list.getFinancial_type().substring(8*n,list.getFinancial_type().length());
+					label+=list.getFinancial_type().substring(5*n,list.getFinancial_type().length());
 				}else label=list.getFinancial_type();
 				name.add(label);
 //				name.add(list.getFinancial_type());
