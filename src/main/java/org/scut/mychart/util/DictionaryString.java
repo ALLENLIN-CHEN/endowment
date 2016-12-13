@@ -29,6 +29,12 @@ public class DictionaryString {
 	public static final String REGISTER_BAR_DEPARTMENT_PERCENT = "REGISTER_BAR_DEPARTMENT_PERCENT";
 	public static final String REGISTER_BAR_DOCTOR_TOTAL = "REGISTER_BAR_DOCTOR_TOTAL";
 	public static final String REGISTER_BAR_DOCTOR_PERCENT = "REGISTER_BAR_DOCTOR_PERCENT";
+	
+	/**
+	 * 用于单位类型分析
+	 */
+	public static final String COMPANY_GENDER_LINE = "COMPANY_GENDER_LINE";
+	public static final String COMPANY_AGE_FUNNEL = "COMPANY_AGE_FUNNEL";
 
     public static final String TSYL_BAR_X = "TSYL_BAR_X";
     public static final String TSYL_LINE = "TSYL_LINE";

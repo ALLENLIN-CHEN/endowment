@@ -28,20 +28,135 @@ public class CompanyServiceImpl implements CompanyService {
 	public Map<String, Object> getCountByGender() {
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<CompanyModel> data = companyMapper.getCountByGender();
-		List<Integer> maleCount = new ArrayList<Integer>();
-		List<Integer> femaleCount = new ArrayList<Integer>();
+		Map<String, Map<String, Integer>> maleCount = new HashMap<String, Map<String,Integer>>();
+		Map<String, Map<String, Integer>> femaleCount = new HashMap<String, Map<String,Integer>>();
+		String temp = "";
 		
 		for(CompanyModel m : data) {
-			if(m.getSex().equals(DictionaryString.MALE)) {
-				maleCount.add(m.getSum());
-			}else if(m.getSex().equals(DictionaryString.FEMALE)) {
-				femaleCount.add(m.getSum());
+			temp = String.valueOf(m.getYear());
+			if(m.getSex().equalsIgnoreCase(DictionaryString.MALE)) {
+				if(!maleCount.containsKey(temp)) {
+					maleCount.put(temp, new HashMap<String, Integer>());
+				}
+				maleCount.get(temp).put(m.getCtype(), m.getTotal());
+				if(!maleCount.get(temp).containsKey("total")) {
+					maleCount.get(temp).put("total", 0);
+				}
+				
+				maleCount.get(temp).put("total", maleCount.get(temp).get("total") + m.getTotal());
+			} else if(m.getSex().equalsIgnoreCase(DictionaryString.FEMALE)) {
+				if(!femaleCount.containsKey(temp)) {
+					femaleCount.put(temp, new HashMap<String, Integer>());
+				}
+				femaleCount.get(temp).put(m.getCtype(), m.getTotal());
+				if(!femaleCount.get(temp).containsKey("total")) {
+					femaleCount.get(temp).put("total", 0);
+				}
+				
+				femaleCount.get(temp).put("total", femaleCount.get(temp).get("total") + m.getTotal());
 			}
 		}
 		
-		result.put("type", DictionaryString.REGISTER_BAR_X);
+		result.put("type", DictionaryString.COMPANY_GENDER_LINE);
 		result.put("male", maleCount);
 		result.put("female", femaleCount);
+		return result;
+	}
+	
+	@Override
+	public Map<String, Object> getAgeRange() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<CompanyModel> data = companyMapper.getAgeRange();
+		
+		Map<String, Map<String, Integer>> total = new HashMap<String, Map<String,Integer>>();
+		Map<String, Map<String, Map<String, Integer>>> companyNum = new HashMap<String, Map<String,Map<String,Integer>>>();
+		String temp = "";
+		String year = "";
+		for(CompanyModel m : data) {
+			temp = m.getCtype();
+			if(!total.containsKey(temp)) {
+				total.put(temp, new HashMap<String, Integer>());
+			}
+			year = String.valueOf(m.getYear());
+			if(!total.get(temp).containsKey(year)) {
+				total.get(temp).put(year, 0);
+			}
+			
+			total.get(temp).put(year, total.get(temp).get(year) + 1);
+			
+			if(!companyNum.containsKey(temp)) {
+				companyNum.put(temp, new HashMap<String, Map<String,Integer>>());
+			}
+			
+			if(!companyNum.get(temp).containsKey(year)) {
+				companyNum.get(temp).put(year, new HashMap<String, Integer>());
+			}
+			
+			// 用于设置年龄
+			if(m.getAge() >= 18 && m.getAge() < 22) {
+				if(!companyNum.get(temp).get(year).containsKey("18-22岁")) {
+					companyNum.get(temp).get(year).put("18-22岁", 0);
+				}
+				
+				companyNum.get(temp).get(year).put("18-22岁", companyNum.get(temp).get(year).get("18-22岁") + 1);
+			} else if(m.getAge() >= 22 && m.getAge() < 25) {
+				if(!companyNum.get(temp).get(year).containsKey("22-25岁")) {
+					companyNum.get(temp).get(year).put("22-25岁", 0);
+				}
+				
+				companyNum.get(temp).get(year).put("22-25岁", companyNum.get(temp).get(year).get("22-25岁") + 1);
+			} else if(m.getAge() >= 25 && m.getAge() < 30) {
+				if(!companyNum.get(temp).get(year).containsKey("25-30岁")) {
+					companyNum.get(temp).get(year).put("25-30岁", 0);
+				}
+				
+				companyNum.get(temp).get(year).put("25-30岁", companyNum.get(temp).get(year).get("25-30岁") + 1);
+			} else if(m.getAge() >= 30 && m.getAge() < 40) {
+				if(!companyNum.get(temp).get(year).containsKey("30-40岁")) {
+					companyNum.get(temp).get(year).put("30-40岁", 0);
+				}
+				
+				companyNum.get(temp).get(year).put("30-40岁", companyNum.get(temp).get(year).get("30-40岁") + 1);
+			} else if(m.getAge() >= 40 && m.getAge() < 50) {
+				if(!companyNum.get(temp).get(year).containsKey("40-50岁")) {
+					companyNum.get(temp).get(year).put("40-50岁", 0);
+				}
+				
+				companyNum.get(temp).get(year).put("40-50岁", companyNum.get(temp).get(year).get("40-50岁") + 1);
+			} else if(m.getAge() >= 50) {
+				if(!companyNum.get(temp).get(year).containsKey("50岁以上")) {
+					companyNum.get(temp).get(year).put("50岁以上", 0);
+				}
+				
+				companyNum.get(temp).get(year).put("50岁以上", companyNum.get(temp).get(year).get("50岁以上") + 1);
+			}
+		}
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		double per = 0.0;
+		Map<String, Map<String, Map<String, Double>>> range = new HashMap<String, Map<String,Map<String,Double>>>();
+		for(Map.Entry<String, Map<String, Integer>> e : total.entrySet()) {
+			temp = e.getKey();
+			if(!range.containsKey(temp)) {
+				range.put(temp, new HashMap<String, Map<String,Double>>());
+			}
+			
+			for(Map.Entry<String, Integer> me : e.getValue().entrySet()) {
+				year = me.getKey();
+				
+				if(!range.get(temp).containsKey(year)) {
+					range.get(temp).put(year, new HashMap<String, Double>());
+				}
+				
+				for(Map.Entry<String, Integer> ageMap : companyNum.get(temp).get(year).entrySet()) {
+					per = (double)ageMap.getValue() / me.getValue() * 100;
+					range.get(temp).get(year).put(ageMap.getKey(), Double.valueOf(df.format(per)));
+				}
+			}
+		}
+		
+		result.put("type", DictionaryString.COMPANY_AGE_FUNNEL);
+		result.put("range", range);
 		return result;
 	}
 
@@ -54,249 +169,72 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Map<String, Object> getAreaCoverage() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<CompanyModel> data = companyMapper.getAreaCoverage(DictionaryString.BUSINESS_REGISTER);
-		Map<String, Integer> total = new HashMap<String, Integer>();
-		String temp = "";
-		for(CompanyModel m : data) {
-			temp = String.valueOf(m.getYear());
-			if(total.containsKey(temp)) {
-				total.put(temp, total.get(temp) + m.getSum());
-			}else {
-				total.put(temp, m.getSum());
-			}
-		}
-		
-		Map<String, List<Double>> coverage = new HashMap<String, List<Double>>();
-		
-		DecimalFormat df = new DecimalFormat("#.##");
-		
-		for(CompanyModel m : data) {
-			temp = String.valueOf(m.getYear());
-			m.setCoverage((double)m.getSum() / total.get(temp) * 100);
-			if(coverage.containsKey(m.getArea())) {
-				coverage.get(m.getArea()).add(Double.valueOf(df.format(m.getCoverage())));
-			}else {
-				coverage.put(m.getArea(), new ArrayList<Double>());
-				coverage.get(m.getArea()).add(Double.valueOf(df.format(m.getCoverage())));
-			}
-		}
-		
-		result.put("type", DictionaryString.REGISTER_GAUGE);
-		result.put("coverage", coverage);
-		return result;
-	}
-
-	@Override
-	public Map<String, Object> getAgeRange() {
-		Map<String, Object> result = new HashMap<String, Object>();
-		List<CompanyModel> data = companyMapper.getAgeRange(DictionaryString.BUSINESS_REGISTER);
-		
-		Map<String, Map<String, Integer>> dataSet = new HashMap<String, Map<String,Integer>>();
-		String temp = "";
-		for(CompanyModel m : data) {
-			temp = String.valueOf(m.getYear());
-			if(dataSet.containsKey(temp)) {
-				dataSet.get(temp).put("total", dataSet.get(temp).get("total") + m.getSum());
-			}else {
-				dataSet.put(temp, new HashMap<String, Integer>());
-				dataSet.get(temp).put("total", m.getSum());
-			}
-			
-			if(m.getYear() - m.getBirth() <= 6) {
-				if(dataSet.get(temp).containsKey(DictionaryString.CHILD)) {
-					dataSet.get(temp).put(DictionaryString.CHILD, dataSet.get(temp).get(DictionaryString.CHILD) + m.getSum());
-				}else {
-					dataSet.get(temp).put(DictionaryString.CHILD, m.getSum());
-				}
-			} else if(m.getYear() - m.getBirth() >= 7 && m.getYear() - m.getBirth() <= 40) {
-				if(dataSet.get(temp).containsKey(DictionaryString.YOUTH)) {
-					dataSet.get(temp).put(DictionaryString.YOUTH, dataSet.get(temp).get(DictionaryString.YOUTH) + m.getSum());
-				}else {
-					dataSet.get(temp).put(DictionaryString.YOUTH, m.getSum());
-				}
-			} else if(m.getYear() - m.getBirth() >= 41 && m.getYear() - m.getBirth() <= 65) {
-				if(dataSet.get(temp).containsKey(DictionaryString.MIDLIFE)) {
-					dataSet.get(temp).put(DictionaryString.MIDLIFE, dataSet.get(temp).get(DictionaryString.MIDLIFE) + m.getSum());
-				}else {
-					dataSet.get(temp).put(DictionaryString.MIDLIFE, m.getSum());
-				}
-			} else if(m.getYear() - m.getBirth() >= 66) {
-				if(dataSet.get(temp).containsKey(DictionaryString.OLDER)) {
-					dataSet.get(temp).put(DictionaryString.OLDER, dataSet.get(temp).get(DictionaryString.OLDER) + m.getSum());
-				}else {
-					dataSet.get(temp).put(DictionaryString.OLDER, m.getSum());
-				}
-			} 
-		}
-		
-		result.put("type", DictionaryString.REGISTER_FUNNEL);
-		result.put("ageRange", dataSet);
-		
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getHospitalTotal() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<CompanyModel> data = companyMapper.getHospitalTotal(DictionaryString.BUSINESS_REGISTER);
-		Map<String, List<CompanyModel>> total = new HashMap<String, List<CompanyModel>>();
-		String temp = "";
-		for(CompanyModel m : data) {
-			temp = String.valueOf(m.getYear());
-			if(total.containsKey(temp)) {
-				if(total.get(temp).size() >= 10) {
-					continue;
-				}
-				
-				total.get(temp).add(m);
-			}else {
-				total.put(temp, new ArrayList<CompanyModel>());
-				total.get(temp).add(m);
-			}
-		}
-		
-		result.put("rank", total);
-		result.put("type", DictionaryString.REGISTER_BAR_HOSPITAL_TOTAL);
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getHospitalPercent(int startTime, int endTime) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		String stime = startTime + "-01-01";
-		String etime = endTime + "-12-31";
-		List<CompanyModel> total = companyMapper.getHospitalByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		List<CompanyModel> day = companyMapper.getHospitalMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		Map<String, Double> per = new HashMap<String, Double>();
-		
-		DecimalFormat df = new DecimalFormat("#.##");
-		double calPer = 0.0;
-		CompanyModel d = null;
-		int index = 0;
-		for(CompanyModel m : total) {
-			d = day.get(index);
-			calPer = (double)m.getSum() / (d.getMaxNum() * 365 * (endTime - startTime + 1)) * 100;
-			per.put(m.getHospital(), Double.valueOf(df.format(calPer)));
-			index++;
-		}
-		
-		/**
-		 * 用于排序
-		 */
-		List<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String,Double>>(per.entrySet());
-		Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
-
-			@Override
-			public int compare(Entry<String, Double> o1,
-					Entry<String, Double> o2) {
-				if(o2.getValue() - o1.getValue() >= 0) {
-					return 1;
-				}else {
-					return -1;
-				}
-			}
-		});
-		
-		result.put("type", DictionaryString.REGISTER_BAR_HOSPITAL_PERCENT);
-		result.put("percent", list);
+//		String stime = startTime + "-01-01";
+//		String etime = endTime + "-12-31";
+//		List<CompanyModel> total = companyMapper.getHospitalByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
+//		List<CompanyModel> day = companyMapper.getHospitalMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
+//		Map<String, Double> per = new HashMap<String, Double>();
+//		
+//		DecimalFormat df = new DecimalFormat("#.##");
+//		double calPer = 0.0;
+//		CompanyModel d = null;
+//		int index = 0;
+//		for(CompanyModel m : total) {
+//			d = day.get(index);
+//			calPer = (double)m.getSum() / (d.getMaxNum() * 365 * (endTime - startTime + 1)) * 100;
+//			per.put(m.getHospital(), Double.valueOf(df.format(calPer)));
+//			index++;
+//		}
+//		
+//		/**
+//		 * 用于排序
+//		 */
+//		List<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String,Double>>(per.entrySet());
+//		Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+//
+//			@Override
+//			public int compare(Entry<String, Double> o1,
+//					Entry<String, Double> o2) {
+//				if(o2.getValue() - o1.getValue() >= 0) {
+//					return 1;
+//				}else {
+//					return -1;
+//				}
+//			}
+//		});
+//		
+//		result.put("type", DictionaryString.REGISTER_BAR_HOSPITAL_PERCENT);
+//		result.put("percent", list);
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getDepartmentTotal() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<CompanyModel> data = companyMapper.getDepartmentTotal(DictionaryString.BUSINESS_REGISTER);
-		Map<String, List<CompanyModel>> total = new HashMap<String, List<CompanyModel>>();
-		String temp = "";
-		for(CompanyModel m : data) {
-			temp = String.valueOf(m.getYear());
-			if(total.containsKey(temp)) {
-				if(total.get(temp).size() >= 10) {
-					continue;
-				}
-				
-				total.get(temp).add(m);
-			}else {
-				total.put(temp, new ArrayList<CompanyModel>());
-				total.get(temp).add(m);
-			}
-		}
-		
-		result.put("rank", total);
-		result.put("type", DictionaryString.REGISTER_BAR_DEPARTMENT_TOTAL);
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getDepartmentPercent(int startTime, int endTime) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		String stime = startTime + "-01-01";
-		String etime = endTime + "-12-31";
-		List<CompanyModel> total = companyMapper.getDepartmentByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		List<CompanyModel> day = companyMapper.getDepartmentMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		Map<String, Double> per = new HashMap<String, Double>();
-		Map<String, Integer> totalMap = new HashMap<String, Integer>();
-		for(CompanyModel m : total) {
-			String key = m.getHospital() + "-" + m.getDepartment();
-			if(!totalMap.containsKey(key)) {
-				totalMap.put(key, m.getSum());
-			}
-		}
-		
-		DecimalFormat df = new DecimalFormat("#.##");
-		double calPer = 0.0;
-		for(CompanyModel m : day) {
-			String key = m.getHospital() + "-" + m.getDepartment();
-			if(totalMap.containsKey(key)) {
-				calPer = (double)totalMap.get(key) / (m.getMaxNum() * 365 * (endTime - startTime + 1)) * 100;
-				per.put(key, Double.valueOf(df.format(calPer)));
-			}
-		}
-
-		/**
-		 * 用于排序
-		 */
-		List<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String,Double>>(per.entrySet());
-		Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
-
-			@Override
-			public int compare(Entry<String, Double> o1,
-					Entry<String, Double> o2) {
-				if(o2.getValue() - o1.getValue() >= 0) {
-					return 1;
-				}else {
-					return -1;
-				}
-			}
-		});
-		
-		result.put("type", DictionaryString.REGISTER_BAR_DEPARTMENT_PERCENT);
-		result.put("percent", list);
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getDoctorTotal() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<CompanyModel> data = companyMapper.getDoctorTotal(DictionaryString.BUSINESS_REGISTER);
-		Map<String, List<CompanyModel>> total = new HashMap<String, List<CompanyModel>>();
-		String temp = "";
-		for(CompanyModel m : data) {
-			temp = String.valueOf(m.getYear());
-			if(total.containsKey(temp)) {
-				if(total.get(temp).size() >= 10) {
-					continue;
-				}
-				
-				total.get(temp).add(m);
-			}else {
-				total.put(temp, new ArrayList<CompanyModel>());
-				total.get(temp).add(m);
-			}
-		}
-		
-		result.put("rank", total);
-		result.put("type", DictionaryString.REGISTER_BAR_DOCTOR_TOTAL);
 		return result;
 	}
 
@@ -304,64 +242,6 @@ public class CompanyServiceImpl implements CompanyService {
 	public Map<String, Object> getDoctorPercent(int startTime, int endTime) {
 		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");  
 		Map<String, Object> result = new HashMap<String, Object>();
-		String stime = startTime + "-01-01";
-		String etime = endTime + "-12-31";
-		List<CompanyModel> total = companyMapper.getDoctorByTime(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		List<CompanyModel> day = companyMapper.getDoctorMaxByDay(DictionaryString.BUSINESS_REGISTER, stime, etime);
-		Map<String, Double> per = new HashMap<String, Double>();
-		Map<String, Integer> totalMap = new HashMap<String, Integer>();
-		for(CompanyModel m : total) {
-			String key = m.getHospital() + "-" + m.getDepartment() + "-" + m.getDoctor();
-			if(!totalMap.containsKey(key)) {
-				totalMap.put(key, m.getSum());
-			}
-		}
-		
-		DecimalFormat df = new DecimalFormat("#.##");
-		double calPer = 0.0;
-		for(CompanyModel m : day) {
-			String key = m.getHospital() + "-" + m.getDepartment() + "-" + m.getDoctor();
-			if(totalMap.containsKey(key)) {
-				calPer = (double)totalMap.get(key) / (m.getMaxNum() * 365 * (endTime - startTime + 1)) * 100;
-				per.put(key, Double.valueOf(df.format(calPer)));
-			}
-		}
-
-		/**
-		 * 用于排序
-		 */
-		List<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String,Double>>(per.entrySet());
-		Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
-
-			@Override
-			public int compare(Entry<String, Double> o1,
-					Entry<String, Double> o2) {
-				if(o1 == null && o2 == null) {  
-				    return 0;  
-				}  
-				if(o1 == null) {  
-				    return -1;  
-				}  
-				if(o2 == null) {  
-				    return 1;  
-				}
-				if(o2.getValue() - o1.getValue() > 0) {
-					return 1;
-				}
-				if(o1.getValue() - o2.getValue() > 0){
-					return -1;
-				}
-				if(o2.getValue() - o1.getValue() == 0) {
-					return 0;
-				}
-				return 0; 
-			}
-		});
-		
-		list = list.subList(0, 11);
-		
-		result.put("type", DictionaryString.REGISTER_BAR_DOCTOR_PERCENT);
-		result.put("percent", list);
 		return result;
 	}
 

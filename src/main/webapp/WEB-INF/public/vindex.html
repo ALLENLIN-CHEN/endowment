@@ -81,16 +81,16 @@
 	<div class="scut-container">
 			<div class="left-content">
 				<div class="item active" data-id="theme1"  data-index="1">
-					<label>用卡挂号行为业务分析</label>
+					<label>单位类型社保参保基数统计分析</label>
 				</div>
 				<div class="sub-1 sub-item" style="display:block;">
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
-						<div class="type" data-url="charts/register/countByGender">男女挂号比例</div>
+						<div class="type" data-url="charts/company/countByGender">参保人数变化情况</div>
 					</div>
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
-						<div class="type" data-url="charts/register/countByGenderLine">男女挂号人数统计</div>
+						<div class="type" data-url="charts/company/ageRange">参保人员年龄占比统计</div>
 					</div>
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
@@ -129,38 +129,23 @@
 			</div>
 			
 			<div class="right-content">
-				<div class="area-wrap">
-					<button type="button" class="btn btn-primary active">孝南区</button>
-					<button type="button" class="btn btn-primary">孝昌县</button>
-					<button type="button" class="btn btn-primary">应城市</button>
-					<button type="button" class="btn btn-primary">云梦县</button>
-					<button type="button" class="btn btn-primary">汉川市</button>
-					<button type="button" class="btn btn-primary">大悟县</button>
-					<button type="button" class="btn btn-primary">安陆市</button>
-				</div>
 				
-				<div class="time_wrap">
+				<div class="company-wrap">
 					<div class="form-group clearfix">
-						<label class="control-label col-sm-2">起始时间(年份)</label>
-						<div class="col-sm-2">
-							<select class="form-control startTime">
-							  <option value="2010">2010年</option>
-							  <option value="2011">2011年</option>
-							  <option value="2012">2012年</option>
-							  <option value="2013">2013年</option>
-							  <option value="2014">2014年</option>
-							  <option value="2015">2015年</option>
-							</select>
-						</div>
-						<label class="control-label col-sm-2">结束时间(年份)</label>
-						<div class="col-sm-2">
-							<select class="form-control endTime">
-							  <option value="2010">2010年</option>
-							  <option value="2011">2011年</option>
-							  <option value="2012">2012年</option>
-							  <option value="2013">2013年</option>
-							  <option value="2014">2014年</option>
-							  <option value="2015">2015年</option>
+						<label class="control-label col-sm-2">单位类型</label>
+						<div class="col-sm-3">
+							<select class="form-control company-type">
+							  <option value="企业">企业</option>
+							  <option value="城镇个体工商户">城镇个体工商户</option>
+							  <option value="事业单位">事业单位</option>
+							  <option value="再就业服务中心">再就业服务中心</option>
+							  <option value="机关">机关</option>
+							  <option value="差额拨款事业单位">差额拨款事业单位</option>
+							  <option value="社团">社团</option>
+							  <option value="全额拨款事业单位">全额拨款事业单位</option>
+							  <option value="自收自支事业单位">自收自支事业单位</option>
+							  <option value="民办非企业单位">民办非企业单位</option>
+							  <option value="其他">其他</option>
 							</select>
 						</div>
 						<button type="button" class="btn btn-primary col-sm-1 search">搜索</button>

@@ -7,11 +7,11 @@ public interface CompanyService {
 	
 	public Map<String, Object> getCountByGender();
 	
+	public Map<String, Object> getAgeRange();
+	
 	public Map<String, Object> getCountByGenderLine();
 
 	public Map<String, Object> getAreaCoverage();
-
-	public Map<String, Object> getAgeRange();
 
 	public Map<String, Object> getHospitalTotal();
 
