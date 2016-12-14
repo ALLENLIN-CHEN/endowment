@@ -9,5 +9,9 @@ public interface CompanyMapper {
 	public List<CompanyModel> getCountByGender();
 
 	public List<CompanyModel> getAgeRange();
+
+	public List<CompanyModel> getCompanyInsuranceTotal();
+
+	public List<CompanyModel> getCompanyInsurancePersonTotal();
 	
 }

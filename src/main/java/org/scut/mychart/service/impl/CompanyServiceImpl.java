@@ -161,6 +161,65 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
+	public Map<String, Object> getTop10Company() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<CompanyModel> companyTotal = companyMapper.getCompanyInsuranceTotal();
+		List<CompanyModel> personTotal = companyMapper.getCompanyInsurancePersonTotal();
+		
+		Map<String, Map<String, Double>> allRank = new HashMap<String, Map<String,Double>>();
+		Map<String, List<Map.Entry<String, Double>>> orderedRank = new HashMap<String, List<Entry<String,Double>>>();
+		String year, company;
+		DecimalFormat df = new DecimalFormat("#.##");
+		double per = 0.0;
+		for(CompanyModel m : companyTotal) {
+			year = String.valueOf(m.getYear());
+			if(!allRank.containsKey(year)) {
+				allRank.put(year, new HashMap<String, Double>());
+			}
+			
+			company = m.getCtype();
+			allRank.get(year).put(company, (double)m.getTotal());
+		}
+		
+		for(CompanyModel m : personTotal) {
+			year = String.valueOf(m.getYear());
+			company = m.getCtype();
+			per = allRank.get(year).get(company) / m.getPersonTotal();
+			allRank.get(year).put(company, Double.valueOf(df.format(per)));
+		}
+		
+		List<Map.Entry<String, Double>> list = null;
+		
+		for(Map.Entry<String, Map<String, Double>> entry : allRank.entrySet()) {
+			list = new ArrayList<Map.Entry<String,Double>>(entry.getValue().entrySet());
+			Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+
+				@Override
+				public int compare(Entry<String, Double> o1,
+						Entry<String, Double> o2) {
+					if(o2.getValue() - o1.getValue() > 0) {
+						return 1;
+					}
+					if(o2.getValue() - o1.getValue() == 0) {
+						return 0;
+					}
+					if(o2.getValue() - o1.getValue() < 0){
+						return -1;
+					}
+					return 0;
+				}
+			});
+			list = list.subList(0, 11);
+			orderedRank.put(entry.getKey(), list);
+		}
+		
+		result.put("type", DictionaryString.COMPANY_TOP_BAR);
+		result.put("rank", orderedRank);
+		
+		return result;
+	}
+
+	@Override
 	public Map<String, Object> getCountByGenderLine() {
 		Map<String, Object> result = new HashMap<String, Object>();
 		return result;

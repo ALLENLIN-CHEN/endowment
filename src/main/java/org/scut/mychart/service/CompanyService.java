@@ -9,6 +9,8 @@ public interface CompanyService {
 	
 	public Map<String, Object> getAgeRange();
 	
+	public Map<String, Object> getTop10Company();
+	
 	public Map<String, Object> getCountByGenderLine();
 
 	public Map<String, Object> getAreaCoverage();

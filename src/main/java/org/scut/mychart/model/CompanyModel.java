@@ -10,6 +10,8 @@ public class CompanyModel {
 	private String ctype;
 	
 	private int age;
+	
+	private int personTotal;
 
 	public int getYear() {
 		return year;
@@ -49,5 +51,13 @@ public class CompanyModel {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public int getPersonTotal() {
+		return personTotal;
+	}
+
+	public void setPersonTotal(int personTotal) {
+		this.personTotal = personTotal;
 	}
 }

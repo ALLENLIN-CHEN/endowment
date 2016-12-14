@@ -158,44 +158,11 @@ function handleCharts(data) {
 	//非挂号年龄段分析时进行timeline函数的解绑
 	myChart.off('timelinechanged',changeLegendShowByTimeLine);
 	
-	if(data.type === 'REGISTER_GAUGE') {
-		var dataIndex = 1; //用于记录数据的展示索引
-		var year = 2011;
-		var area = $('.area-wrap .btn.active').html();
-		
-		timer = setInterval(function() {
-			if(isAreaChange) {
-				area = $('.area-wrap .btn.active').html();
-				isAreaChange = !isAreaChange;
-				dataIndex = 0;
-				year = 2010;
-			}
-			if(dataIndex >= data.coverage[area].length) {
-				dataIndex = 0;
-			}
-			
-			if(year >= 2015) {
-				year = 2010;
-			}
-			
-			option.series[0].data[0] = {
-				value : data.coverage[area][dataIndex],
-				name : area
-			};
-			option.series[0].detail.formatter = year + "年覆盖率{value}%";
-			dataIndex++;
-			year++;
-			myChart.setOption(option, true);
-		}, 2000);
-	} else if(data.type === 'COMPANY_AGE_FUNNEL') {
+	if(data.type === 'COMPANY_AGE_FUNNEL') {
 		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	} else if(data.type === 'REGISTER_BAR_HOSPITAL_TOTAL') {
+	} else if(data.type === 'COMPANY_TOP_BAR') {
 		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	} else if(data.type === 'REGISTER_BAR_DEPARTMENT_TOTAL') {
-		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	} else if(data.type === 'REGISTER_BAR_DOCTOR_TOTAL') {
-		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	}
+	} 
 }
 
 /**
@@ -216,7 +183,7 @@ function changeLegendShowByTimeLine(timeLineData) {
 		}
 		option.baseOption.legend.selected = setting;
 		myChart.setOption(option);
-	} else if(chartType === 'REGISTER_BAR_HOSPITAL_TOTAL') {
+	} else if(chartType === 'COMPANY_TOP_BAR') {
 		var legends = [];
 		var index = timeLineData.currentIndex;
 		legends = option.extended[2010 + index];

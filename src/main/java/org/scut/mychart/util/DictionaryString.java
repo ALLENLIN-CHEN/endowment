@@ -35,6 +35,7 @@ public class DictionaryString {
 	 */
 	public static final String COMPANY_GENDER_LINE = "COMPANY_GENDER_LINE";
 	public static final String COMPANY_AGE_FUNNEL = "COMPANY_AGE_FUNNEL";
+	public static final String COMPANY_TOP_BAR = "COMPANY_TOP_BAR";
 
     public static final String TSYL_BAR_X = "TSYL_BAR_X";
     public static final String TSYL_LINE = "TSYL_LINE";

@@ -22,10 +22,17 @@ public class CompanyController {
 		return result;
     }  
 	
-	@RequestMapping("/countByGenderLine")
+	@RequestMapping("/ageRange")
+	@ResponseBody
+	public Map<String, Object> getAgeRange(){
+		Map<String, Object> result = companyService.getAgeRange();
+		return result;
+	} 
+
+	@RequestMapping("/top10")
     @ResponseBody
     public Map<String, Object> getCountByGenderLine(){
-		Map<String, Object> result = companyService.getCountByGenderLine();
+		Map<String, Object> result = companyService.getTop10Company();
 		return result;
     } 
 	
@@ -36,13 +43,6 @@ public class CompanyController {
 		return result;
     } 
 	
-	@RequestMapping("/ageRange")
-    @ResponseBody
-    public Map<String, Object> getAgeRange(){
-		Map<String, Object> result = companyService.getAgeRange();
-		return result;
-    } 
-
 	@RequestMapping("/hospitalTotal")
 	@ResponseBody
 	public Map<String, Object> getHospitalTotal(){
