@@ -19,8 +19,8 @@ public class Base_3Controller {
 
     @RequestMapping("/base_3_2")
     @ResponseBody
-    public Map<String, Object> getBase_3_2(){
-        Map<String, Object> data = this.base_3Service.getBase_3_2ChartOption();
+    public Map<String, Object> getBase_3_2(@RequestParam String financial_type){
+        Map<String, Object> data = this.base_3Service.getBase_3_2ChartOption(financial_type);
         return data;
     }
 

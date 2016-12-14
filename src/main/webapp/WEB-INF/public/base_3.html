@@ -67,7 +67,7 @@
 				<div class="sub-1 sub-item" style="display:block;">
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
-						<div class="type" data-url="charts/base_3/base_3_2">各经济类型参保人数男女变化</div>
+						<div class="type" data-url="charts/base_3/base_3_2" data-no-init="1" onclick="getFinancials()">各经济类型参保人数男女变化</div>
 					</div>
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
@@ -93,7 +93,7 @@
 										type:'get',
 										url:"charts/base_3/financial",
 										success:function(value){
-											var financials;
+											var financials = "<option value=\'全经济类型\'>全经济类型</option>";
 											for(var index in value){
 												financials+="<option value=\'"+value[index]+"\'>"+value[index]+"</option>"
 											}

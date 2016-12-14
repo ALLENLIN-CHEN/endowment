@@ -45,7 +45,8 @@ function getBase_3_2(data) {
 
 	var option = {
 		title: {
-			text: '各经济类型参保人数男女变化'
+			text: '各经济类型参保人数男女变化',
+			subtext: data.financial_type[0].financial_name
 		},
 		dataZoom: [
 			{
@@ -71,7 +72,7 @@ function getBase_3_2(data) {
 			extraCssText:'box-shadow: 0 0 5px rgba(0, 0, 0, 1)',
 			formatter: function(v) {
 				var i = parseInt(v.seriesIndex/2);
-				return v.name+'年'+data.financial_type[i].financial_name+'-'+v.seriesName+':'+v.value;
+				return v.name+'年'+data.financial_type[i].financial_name+'-'+v.seriesName+' : '+v.value+"人";
 			}
 		},
 		legend: {
