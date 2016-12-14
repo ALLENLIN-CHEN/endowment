@@ -7,8 +7,8 @@
 
 $(function() {
 	hideLoading();
-	
-	myChart = echarts.init(document.getElementById('chartMain'));
+	$('.right-content .single').css('visibility','visible');
+	//myChart = echarts.init(document.getElementById('chartMain'));
 /***********************************************************************************************************/	
 	$(".tablesorter").tablesorter();
 
@@ -54,12 +54,18 @@ $(function() {
 	$(document).on('click', '.sub-item-wrap .type', function() {
 		//清除定时器
 		clearInterval(timer);
-		myChart.dispose();
+		if(myChart) {
+			myChart.dispose();
+		}
 		myChart = echarts.init(document.getElementById('chartMain'));
-		if(isInit) {
-			//这样写是为了能够让echarts能够得到所设置的width，而不是使用默认的width。 设置完毕后进行hide隐藏掉
-			$('.right-content .single').css('visibility','visible').hide();
-			isInit = !isInit;
+//		if(isInit) {
+//			//这样写是为了能够让echarts能够得到所设置的width，而不是使用默认的width。 设置完毕后进行hide隐藏掉
+//			$('.right-content .single').css('visibility','visible').hide();
+//			isInit = !isInit;
+//		}
+		
+		if(!$('.company-wrap').is(':hidden')) {
+			$('.company-wrap').hide();
 		}
 		
 		showLoading();
@@ -67,71 +73,11 @@ $(function() {
 		$('.sub-item-wrap.active').removeClass('active');
 		$(this).parent().addClass('active');
 		
-		if(!$('.area-wrap').is(':hidden')) {
-			$('.area-wrap').hide();
-		}
-		if(!$('.time_wrap').is(':hidden')) {
-			$('.time_wrap').hide();
-		}
-		
-		if(!$(this).data('no-init')) {
-			var url = $(this).data('url');
-			$.ajax({
-				type: 'GET',
-				url: url,
-				dataType: 'json',
-				success: function(res) {
-					handleCharts(res);
-				},
-				error: function(err) {
-					alert('获取数据出错，错误为：' + err);
-				}
-			});
-		}else {
-			hideLoading();
-			$('.time_wrap').show();
-		}
-		
-	});
-	
-	/**
-	 * 用于设定地区按钮的选择
-	 */
-	$(document).on('click', '.area-wrap .btn', function() {
-		if(!$(this).hasClass('active')) {
-			$('.area-wrap .btn.active').removeClass('active');
-			$(this).addClass('active');
-			
-			isAreaChange = true;
-		}
-	});
-	
-	/**
-	 * 绑定时间查询的确定按钮
-	 */
-	$(document).on('click', '.time_wrap .search', function() {
-		showLoading();
-		
-		var startTime = $('.startTime').val() - 0;
-		var endTime = $('.endTime').val() - 0;
-		if(endTime < startTime) {
-			alert('起始时间不能大于结束时间！');
-			hideLoading();
-			return;
-		}
-		
-		var url = $('.sub-item-wrap.active .type').data('url');
-		var params = {
-				startTime: startTime,
-				endTime: endTime
-		}
-		
-		
+		var url = $(this).data('url');
 		$.ajax({
 			type: 'GET',
 			url: url,
 			dataType: 'json',
-			data: params,
 			success: function(res) {
 				handleCharts(res);
 			},
@@ -139,6 +85,47 @@ $(function() {
 				alert('获取数据出错，错误为：' + err);
 			}
 		});
+		
+	});
+	
+	/**
+	 * 绑定单位类型查询的确定按钮
+	 */
+	$(document).on('click', '.company-wrap .search', function() {
+		showLoading();
+		var type = $('.company-type').val();
+		var age = {};
+		var arr = [];
+		var timeLineOptions = [];
+		var cData = option.extended[type];
+		var props = Object.getOwnPropertyNames(cData);
+		var rangeDescs = [];
+		for(var index in props) {
+			age = cData[props[index]];
+			arr = [];
+			rangeDescs = Object.getOwnPropertyNames(age);
+			for(var rindex in rangeDescs) {
+				arr.push({
+					name: rangeDescs[rindex],
+					value: age[rangeDescs[rindex]]
+				});
+			}
+			
+			timeLineOptions.push({
+				title : {text: props[index] + '年年龄段占比'},
+				series: [
+				   {
+					  data: arr
+				   }
+				]
+			});
+		}
+		
+		option.baseOption.tooltip.formatter = type + "<br/>{b} : {c}%";
+		option.options = timeLineOptions;
+		
+		myChart.setOption(option);
+		hideLoading();
 	});
 	
 	
@@ -171,57 +158,24 @@ function handleCharts(data) {
 	//非挂号年龄段分析时进行timeline函数的解绑
 	myChart.off('timelinechanged',changeLegendShowByTimeLine);
 	
-	if(data.type === 'REGISTER_GAUGE') {
-		var dataIndex = 1; //用于记录数据的展示索引
-		var year = 2011;
-		var area = $('.area-wrap .btn.active').html();
-		
-		timer = setInterval(function() {
-			if(isAreaChange) {
-				area = $('.area-wrap .btn.active').html();
-				isAreaChange = !isAreaChange;
-				dataIndex = 0;
-				year = 2010;
-			}
-			if(dataIndex >= data.coverage[area].length) {
-				dataIndex = 0;
-			}
-			
-			if(year >= 2015) {
-				year = 2010;
-			}
-			
-			option.series[0].data[0] = {
-				value : data.coverage[area][dataIndex],
-				name : area
-			};
-			option.series[0].detail.formatter = year + "年覆盖率{value}%";
-			dataIndex++;
-			year++;
-			myChart.setOption(option, true);
-		}, 2000);
-	} else if(data.type === 'REGISTER_FUNNEL') {
+	if(data.type === 'COMPANY_AGE_FUNNEL') {
 		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	} else if(data.type === 'REGISTER_BAR_HOSPITAL_TOTAL') {
+	} else if(data.type === 'COMPANY_TOP_BAR') {
 		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	} else if(data.type === 'REGISTER_BAR_DEPARTMENT_TOTAL') {
-		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	} else if(data.type === 'REGISTER_BAR_DOCTOR_TOTAL') {
-		myChart.on('timelinechanged',changeLegendShowByTimeLine);
-	}
+	} 
 }
 
 /**
  * 用于处理时间轴的为0的legend不显示的情况
  */
 function changeLegendShowByTimeLine(timeLineData) {
-	if(chartType === 'REGISTER_FUNNEL') {
-		var legends = ['0-6岁（儿童）', '7-40（青少年）', '41-65（中年）', '66以上（老年）'];
+	if(chartType === 'COMPANY_AGE_FUNNEL') {
+		var legends = ['18-22岁','22-25岁','25-30岁','30-40岁','40-50岁','50岁以上'];
 		var setting = {};
 		var index = timeLineData.currentIndex;
 		var sData = option.options[index].series[0].data;
 		for(var i = 0; i < sData.length; i++) {
-			if(sData[i].value <= 0) {
+			if(!sData[i].value || sData[i].value <= 0) {
 				setting[sData[i].name] = false;
 			}else {
 				setting[sData[i].name] = true;
@@ -229,7 +183,7 @@ function changeLegendShowByTimeLine(timeLineData) {
 		}
 		option.baseOption.legend.selected = setting;
 		myChart.setOption(option);
-	} else if(chartType === 'REGISTER_BAR_HOSPITAL_TOTAL') {
+	} else if(chartType === 'COMPANY_TOP_BAR') {
 		var legends = [];
 		var index = timeLineData.currentIndex;
 		legends = option.extended[2010 + index];

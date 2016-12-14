@@ -1,120 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.scut.mychart.mapper.RegisterMapper">
+<mapper namespace="org.scut.mychart.mapper.CompanyMapper">
 	<!-- 开启二级缓存 -->
 	<cache size="1024" readOnly="true" />
 	
-	<select id="getCountByGender" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
+	<select id="getCountByGender" resultType="org.scut.mychart.model.CompanyModel" useCache="true">
 		<![CDATA[
-			select year(h.operation_time) as year, p.sex as sex, count(*) as sum 
-			from hospital_business h, person p 
-			where h.operation = #{0} and h.social_security_card = p.social_security_card 
-			group by year, sex 
-			order by year
+			select year(base_date) as year, company_type as ctype, sex, count(*) as total 
+			from company_social_security c, person p 
+			where c.social_security_card = p.social_security_card 
+			group by year, ctype, sex 
+			order by year, ctype, sex
 		]]>
 	</select>
 
-	<select id="getAreaCoverage" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
+	<select id="getAgeRange" resultType="org.scut.mychart.model.CompanyModel" useCache="true">
 		<![CDATA[
-			select year(operation_time) as year, area, count(*) as sum 
-			from hospital_business 
-			where operation = #{0} 
-			group by year, area 
-			order by year
+			select year(base_date) as year, company_type as ctype, (year(base_date) - year(p.birthday)) as age 
+			from company_social_security c, person p 
+			where c.social_security_card = p.social_security_card 
+			group by year, company_type, age 
+			order by year,company_type
 		]]>
 	</select>
 
-	<select id="getAgeRange" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
+	<select id="getCompanyInsuranceTotal" resultType="org.scut.mychart.model.CompanyModel" useCache="true">
 		<![CDATA[
-			SELECT count(*) as sum,year(operation_time) as year,year(birthday) as birth 
-			FROM hospital_business join person on hospital_business.social_security_card=person.social_security_card 
-			where operation = #{0}  
-			group by birth,year 
-			order by year,birth
-		]]>
-	</select>
-
-	<select id="getHospitalTotal" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select count(*) as sum, year(operation_time) as year, hospital 
-			from hospital_business where operation = #{0}
-			group by year, hospital 
-			order by year,sum desc
-		]]>
-	</select>
-
-	<select id="getHospitalByTime" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select hospital, count(*) as sum 
-			from hospital_business where operation = #{0} and operation_time between #{1} and #{2}  
-			group by hospital 
-			order by hospital
-		]]>
-	</select>
-
-	<select id="getHospitalMaxByDay" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select temp.hospital as hospital, max(temp.dsum) as maxNum 
-			from (select hospital, count(*) as dsum from hospital_business where operation = #{0} and operation_time between #{1} and #{2} group by hospital, operation_time) temp 
-			group by hospital 
-			order by hospital
-		]]>
-	</select>
-
-	<select id="getDepartmentTotal" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select count(*) as sum, year(operation_time) as year, hospital, department  
-			from hospital_business 
-			where operation = #{0} 
-			group by year, hospital, department 
-			order by year,sum desc
+			select year(base_date) as year, company_type as ctype, sum(social_insurance_base) as total  
+			from company_social_security 
+			group by year, company_type
+			order by year, ctype
 		]]>
 	</select>
 	
-	<select id="getDepartmentByTime" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
+	<select id="getCompanyInsurancePersonTotal" resultType="org.scut.mychart.model.CompanyModel" useCache="true">
 		<![CDATA[
-			select hospital, department, count(*) as sum 
-			from hospital_business where operation = #{0} and operation_time between #{1} and #{2}  
-			group by hospital, department
-			order by hospital
-		]]>
+			select year(base_date) as year, company_type as ctype, count(distinct(social_security_card)) as personTotal  
+			from company_social_security 
+			group by year, company_type 
+			order by year, ctype
+		]]>	
 	</select>
-	
-	<select id="getDepartmentMaxByDay" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select temp.hospital as hospital, temp.department as department, max(temp.dsum) as maxNum 
-			from (select hospital, department, count(*) as dsum from hospital_business where operation = #{0} and operation_time between #{1} and #{2} group by hospital, department, operation_time) temp 
-			group by hospital, department
-			order by hospital
-		]]>
-	</select>
-	
-	<select id="getDoctorTotal" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select count(*) as sum, year(operation_time) as year, hospital, department, doctor
-			from hospital_business 
-			where operation = #{0} 
-			group by year, hospital, department, doctor
-			order by year,sum desc
-		]]>
-	</select>
-	
-	<select id="getDoctorByTime" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select hospital, department, doctor, count(*) as sum 
-			from hospital_business where operation = #{0} and operation_time between #{1} and #{2}  
-			group by hospital, department, doctor
-			order by hospital
-		]]>
-	</select>
-	
-	<select id="getDoctorMaxByDay" resultType="org.scut.mychart.model.RegisterModel" useCache="true">
-		<![CDATA[
-			select temp.hospital as hospital, temp.department as department, temp.doctor as doctor, max(temp.dsum) as maxNum 
-			from (select hospital, department, doctor, count(*) as dsum from hospital_business where operation = #{0} and operation_time between #{1} and #{2} group by hospital, department, doctor, operation_time) temp 
-			group by hospital, department, doctor
-			order by hospital
-		]]>
-	</select>
-	
 </mapper>

@@ -161,23 +161,15 @@
 	left: 24%;
 }
 
-.right-content .time_wrap {
+.right-content .company-wrap {
 	height: 36px;
 	display: none;
 }
 
-.right-content .time_wrap label {
+.right-content .company-wrap label {
 	height: 36px;
     margin: 0;
     line-height: 36px;
-}
-
-.right-content .time_wrap .startTime {
-	width: 65%;
-}
-
-.right-content .time_wrap .endTime {
-	width: 65%;
 }
 
 .right-content .single {
