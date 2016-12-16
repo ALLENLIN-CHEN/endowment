@@ -16,7 +16,6 @@ $(function() {
 	$(".tab_content").hide(); //Hide all content
 	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
 	$(".tab_content:first").show(); //Show first tab content
-	$('.time_wrap').hide();
 	//On Click Event
 	$("ul.tabs li").click(function() {
 
@@ -60,9 +59,9 @@ $(function() {
 		myChart = echarts.init(document.getElementById('chartMain'));
 
 		if($(this).data('no-init')) {
-			$('.time_wrap').show();
+			document.getElementById('financial_wrap').style.visibility="visible";
 		}else {
-			$('.time_wrap').hide();
+			document.getElementById('financial_wrap').style.visibility="hidden";
 		}
 
 		showLoading();
