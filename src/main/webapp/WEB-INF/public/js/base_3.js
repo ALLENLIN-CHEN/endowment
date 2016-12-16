@@ -334,30 +334,3 @@ function getBase_3_4(data) {
 	};
 	return option;
 }
-
-/**
- * 绑定经济类型查询的确定按钮
- */
-$(document).on('click', '.time_wrap .financial_search', function() {
-	showLoading();
-
-	var financial = $('.startTime').val();
-
-	var url = $('.sub-item-wrap.active .type').data('url');
-	var params = {
-		financial_type: financial,
-	}
-
-	$.ajax({
-		type: 'GET',
-		url: url,
-		dataType: 'json',
-		data: params,
-		success: function(res) {
-			handleCharts(res);
-		},
-		error: function(err) {
-			alert('获取数据出错，错误为：' + err);
-		}
-	});
-});
