@@ -25,11 +25,11 @@
 	<select id="selectByAge" parameterType="java.util.Map" resultType="org.scut.mychart.model.IndustryModel" statementType="STATEMENT">
 		select year(base_date) as "year",
 		case when (year(base_date)-year(birthday)>50) then "50岁以上"
-		when (year(base_date)-year(birthday)>40) then "40岁——50岁"
-		when (year(base_date)-year(birthday)>30) then "30岁——40岁"
-		when (year(base_date)-year(birthday)>25) then "25岁——30岁"
-		when (year(base_date)-year(birthday)>22) then "22岁——25岁"
-		when (year(base_date)-year(birthday)>=18) then "18岁——22岁"
+		when (year(base_date)-year(birthday)>40) then "40岁—50岁"
+		when (year(base_date)-year(birthday)>30) then "30岁—40岁"
+		when (year(base_date)-year(birthday)>25) then "25岁—30岁"
+		when (year(base_date)-year(birthday)>22) then "22岁—25岁"
+		when (year(base_date)-year(birthday)>=18) then "18岁—22岁"
 		else "18岁以下 " end as "age",
 		count(distinct person.social_security_card) as "person_num"
 		from company_social_security inner join person
@@ -42,11 +42,11 @@
 	<select id="selectByAgeAll" parameterType="java.util.Map" resultType="org.scut.mychart.model.IndustryModel" statementType="STATEMENT">
 		select year(base_date) as "year",
 		case when (year(base_date)-year(birthday)>50) then "50岁以上"
-		when (year(base_date)-year(birthday)>40) then "40岁——50岁"
-		when (year(base_date)-year(birthday)>30) then "30岁——40岁"
-		when (year(base_date)-year(birthday)>25) then "25岁——30岁"
-		when (year(base_date)-year(birthday)>22) then "22岁——25岁"
-		when (year(base_date)-year(birthday)>=18) then "18岁——22岁"
+		when (year(base_date)-year(birthday)>40) then "40岁—50岁"
+		when (year(base_date)-year(birthday)>30) then "30岁—40岁"
+		when (year(base_date)-year(birthday)>25) then "25岁—30岁"
+		when (year(base_date)-year(birthday)>22) then "22岁—25岁"
+		when (year(base_date)-year(birthday)>=18) then "18岁—22岁"
 		else "18岁以下 " end as "age",
 		count(distinct person.social_security_card) as "person_num"
 		from company_social_security inner join person

@@ -157,7 +157,13 @@ function getIndustryFunnel(res) {
 				timeline: {
 					axisType: 'category',
 					autoPlay: true,
-					playInterval: 2000,
+					playInterval: 3000,
+					orient: 'vertical',
+					inverse: true,
+					right: 10,
+					top: 150,
+					bottom: 10,
+					width: 60,
 					data: yearlist
 				},
 				title: {
@@ -176,13 +182,29 @@ function getIndustryFunnel(res) {
 					}
 				},
 				legend: {
-					 data: ["18岁——22岁", "22岁——25岁", "25岁——30岁", "30岁——40岁","40岁——50岁","50岁以上"]
+					 data: ["18岁—22岁", "22岁—25岁", "25岁—30岁", "30岁—40岁","40岁—50岁","50岁以上"],
+					// left:'left',
+					top:"bottom",
+					// orient:'vertical'
 				},
 				calculable: true,
 				series: [
 			         {
-			        	type: 'funnel'
+			        	type: 'funnel',
+						 label: {
+						 	normal: {
+							 	formatter: function (params) {
+								 return params.name + ": " + params.value + '%';
+							 	},
+								 position: 'center',
+								textStyle:{
+									fontSize: 16,
+									// color:'#00a2ca'
+								}
+						 	}
+					 	}
 			         }
+
 				]
 			},
 			options: timeLineOptions
@@ -217,7 +239,8 @@ function getIndustryBar(res) {
 				  name: "参保基数",
 				  label: {
 	                normal: {
-	                    show: true
+	                    show: true,
+						position:"right"
 	                }
 				  },
 				  itemStyle: {
@@ -272,7 +295,9 @@ function getIndustryBar(res) {
 				yAxis : [
 			       {
 			           type : 'category',
+
 			           axisTick : {show: false},
+					   inverse:true
                        // axisLabel:{
 			        	//   interval:0,
 	                   //    rotate:30
@@ -281,7 +306,10 @@ function getIndustryBar(res) {
 			    ],
 			    xAxis : [
 			       {
-			           type : 'value'
+			           type : 'value',
+					   position: 'top',
+					   scale: true,
+					   splitLine: {show: false},
 			       }
 			    ],
 				grid: {
