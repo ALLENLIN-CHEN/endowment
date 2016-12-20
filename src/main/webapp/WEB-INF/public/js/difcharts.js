@@ -93,7 +93,7 @@ function getDifCompany(data) {
 			           axisTick : {show: false},
 			           axisLabel:{
 			        	  interval:0,
-	                      rotate:30
+	                      rotate:15
 	                   },
 			           data : company_types
 			       }
@@ -201,7 +201,7 @@ function getDifFinancial(data) {
 					axisTick : {show: false},
 					axisLabel:{
 						interval:0,
-						rotate:30
+						rotate:15
 					},
 					data : financial_types
 				}
@@ -326,7 +326,7 @@ function getSamCompany(data) {
 					axisTick : {show: false},
 					axisLabel:{
 						interval:0,
-						rotate:30
+						rotate:15
 					},
 					data : industry_codes
 				}
@@ -439,7 +439,7 @@ function getSamFinancial(data) {
 					axisTick : {show: false},
 					axisLabel:{
 						interval:0,
-						rotate:30
+						rotate:15
 					},
 					data : industry_codes
 				}
