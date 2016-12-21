@@ -1,12 +1,15 @@
- var myChart,echarts;
-
+var myChart;
+var option;
+var chartType;
+var timer = null; //主要用于仪表盘等定时器的句柄，每当新的展示需要重置操作
+var isInit = true; //用于初始化处理单独显示的div宽高获取不到的情况
+var isAreaChange = false; //用于判断是否切换了地区
 
 $(function() {
-
 	hideLoading();
 
-
-/***********************************************************************************************************/	
+	myChart = echarts.init(document.getElementById('chartMain'));
+	/***********************************************************************************************************/
 	$(".tablesorter").tablesorter();
 
 	//When page loads...
@@ -27,13 +30,14 @@ $(function() {
 	});
 
 	$('.column').equalHeight();
-/***********************************************************************************************************/
-	
+	/***********************************************************************************************************/
+	$('.industry_wrap').hide();
+
 	//主题点击
 	$('.item').on('click', function() {
 		//清除定时器
-		//clearInterval(timer);
-		
+		clearInterval(timer);
+
 		$('.right-content .single').hide();
 		$('.right-content .multi').show();
 		$('.sub-item-wrap.active').removeClass('active');
@@ -44,19 +48,30 @@ $(function() {
 			self.addClass('active');
 			$('.sub-' + self.data('index')).slideToggle();
 		}
-		
-	//	setMultiCharts();
+
+		//	setMultiCharts();
 	});
-	
+
 	$(document).on('click', '.sub-item-wrap .type', function() {
 		//清除定时器
-		//clearInterval(timer);
-		
+		clearInterval(timer);
+		myChart.dispose();
+		myChart = echarts.init(document.getElementById('chartMain'));
+		if(isInit) {
+			//这样写是为了能够让echarts能够得到所设置的width，而不是使用默认的width。 设置完毕后进行hide隐藏掉
+			$('.right-content .single').css('visibility','visible').hide();
+		}
+
 		showLoading();
-		
+
 		$('.sub-item-wrap.active').removeClass('active');
 		$(this).parent().addClass('active');
-		
+
+
+		if(!$('.industry_wrap').is(':hidden')) {
+			$('.industry_wrap').hide();
+		}
+		//加载数据,显示图表
 		var url = $(this).data('url');
 		$.ajax({
 			type: 'GET',
@@ -69,18 +84,52 @@ $(function() {
 				alert('获取数据出错，错误为：' + err);
 			}
 		});
+		if($(this).data('no-init')) {
+			hideLoading();
+			$('.industry_wrap').show();
+		}
+
 	});
-	
-	//这样写是为了能够让echarts能够得到所设置的width，而不是使用默认的width。 设置完毕后进行hide隐藏掉
-	$('.right-content .single').css('visibility','visible').hide();
-	
+
+
+	/**
+	 * 绑定时间查询的确定按钮
+	 */
+	$(document).on('click', '.industry_wrap .search', function() {
+		showLoading();
+
+		var industry_code = $('.industry').val();
+
+
+		var url = $('.sub-item-wrap.active .type').data('url');
+		var params = {
+			industry_code: industry_code
+		}
+		if(industry_code=="全行业") params=null;
+
+		$.ajax({
+			type: 'post',
+			url: url,
+			dataType: 'json',
+			data: params,
+			success: function(res) {
+				handleCharts(res);
+			},
+			error: function(err) {
+				alert('获取数据出错，错误为：' + err);
+			}
+		});
+	});
+
+
+
 	/*** 配置滚动条 ***/
 	$(window).on("load",function(){
 		$(".left-content").mCustomScrollbar({
 			autoHideScrollbar:true,
 			theme:"dark-thick"
 		});
-		
+
 	});
 	/*** 结束配置 ***/
 });
@@ -90,11 +139,16 @@ $(function() {
  */
 function handleCharts(data) {
 	$('.right-content .single').show();
+
+	chartType = data.type;
+
+	option = getCharts(data);
+	// console.log(option);
+	myChart.setOption(option);
+	// myChart.setOption(eval('('+ option+')'));
+
 	hideLoading();
 	
-	var option =data;
-	myChart = echarts.init(document.getElementById('chartMain'));
-	myChart.setOption(option);
 }
 
 /*** loading动画 ***/
@@ -106,36 +160,4 @@ function showLoading() {
 function hideLoading() {
 	$('.spinner').hide();
 }
-/*** echart加载设置 ***/
-	// 路径配置
-	require.config({
-		paths: {
-			'echarts': 'http://echarts.baidu.com/build/dist',
-			'echarts-x': 'js/echarts-x-0.2.0/build/dist'
-		}
-	});
-
-	require(['echarts', 'echarts/chart/gauge', 'echarts/chart/bar',
-			'echarts/chart/pie', 'echarts/chart/line', 'echarts/chart/funnel',
-			'echarts/chart/wordCloud', 'echarts/chart/venn', 'echarts/chart/radar',
-
-			'echarts/chart/map'   // 按需加载所需图表，如需动态类型切换功能，别忘了同时加载相应图表
-		],
-		function (ec) {
-
-			//将echart的实例保存起来用于下次更换图表的再次初始化
-			echarts = ec;
-
-			//获取地图数据
-			mapGeoData = require('echarts/util/mapData/params');
-			mapGeoData.params.jiangmen = {
-				getGeoJson: function (callback) {
-					$.getJSON('jsons/jiangmen.json', function (data) {
-						// 压缩后的地图数据必须使用 decode 函数转换
-						callback(mapGeoData.decode(data));
-					});
-				}
-			};
-
-		});
-
+/*** 结束设置 ***/

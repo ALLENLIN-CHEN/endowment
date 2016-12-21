@@ -26,8 +26,18 @@
     <script src="js/jquery.tablesorter.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jquery.equalHeight.js"></script>
 
+
+    <script type="text/javascript" src="js/analysis0.js"></script>
+    <script type="text/javascript" src="js/analysis1.js"></script>
+    <script type="text/javascript" src="js/analysis2.js"></script>
+    <script type="text/javascript" src="js/analysis3.js"></script>
+    <script type="text/javascript" src="js/analysis4.js"></script>
+    <script type="text/javascript" src="js/analysis5.js"></script>
+    <script type="text/javascript" src="js/analysis6.js"></script>
+    <script type="text/javascript" src="js/analysis7.js"></script>
+    <script type="text/javascript" src="js/analysis8.js"></script>
 </head>
-<body>
+<body >
 	<div class="navbar navbar-fixed-top navbar-inverse" >
 	    <div class="container">
 	        <a id="logo" href="/">社保大数据业务平台</a>
@@ -51,66 +61,73 @@
 	<!-- 图表展示与控制容器 -->
 	<div class="scut-container">
 			<div class="left-content">
-				<div class="item active" data-id="theme1"  data-index="1">
-					<label>用卡行为电子凭证分析</label>
+				<div class="item active" data-id="theme2"  data-index="1">
+					<label>各行业社保参保基数统计分析</label>
 				</div>
 				<div class="sub-1 sub-item" style="display:block;">
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
-						<div class="type" data-url="charts/proof/hospitalized">就医服务和住院登记</div>
+						<div class="type" data-url="charts/industry/getLineOption" data-no-init="1">各行业参保人数随时间变化情况</div>
 					</div>
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
-						<div class="type" data-url="charts/proof/treatment">就医服务与异地就医申请</div>
+						<div class="type" data-url="charts/industry/getFunnelOption" data-no-init="1">行业参保人员不同年龄段的占比</div>
 					</div>
 					<div class="sub-item-wrap">
 						<i class="icon"></i>
-						<div class="type" data-url="charts/proof/outpatient">就医服务与门诊统筹</div>
+						<div class="type" data-url="charts/industry/getBarOption">各个行业参保基数排序与对比</div>
 					</div>
-					<div class="sub-item-wrap">
-						<i class="icon"></i>
-						<div class="type" data-url="charts/proof/special">就医服务与特殊医疗待遇申请</div>
+				</div>
+
+			</div>
+
+		<div class="right-content">
+
+			<div class="industry_wrap">
+				<div class="form-group clearfix">
+					<label class="control-label col-sm-2">选择行业</label>
+					<div class="col-sm-3">
+						<select id="industryNameList" class="form-control industry">
+							<script type="text/javascript">
+									$.ajax({
+										type:'get',
+										url:"charts/industry/getIndustryNameList",
+										success:function(data){
+											var value=data.data;
+											var industrys='<option >全行业</option>';
+											for(var index in value){
+												industrys+="<option value=\'"+value[index]+"\'>"+value[index]+"</option>"
+											}
+											document.getElementById("industryNameList").innerHTML=industrys;
+										}
+									});
+							</script>
+						</select>
 					</div>
-					<div class="sub-item-wrap">
-						<i class="icon"></i>
-						<div class="type" data-url="charts/proof/wiped">就医服务与医疗费用报销申请</div>
-					</div>
-					<div class="sub-item-wrap">
-						<i class="icon"></i>
-						<div class="type" data-url="charts/proof/register">挂号与就医服务</div>
-					</div>
+					<button type="button" class="btn btn-primary col-sm-1 search">查看</button>
 				</div>
 			</div>
-			
-			<div class="right-content">
-<!-- 				<div class="multi"> -->
-<!-- 					<div id="chart1" class="multi-chart"></div> -->
-<!-- 					<div id="chart2" class="multi-chart"></div> -->
-<!-- 					<div id="chart3" class="multi-chart"></div> -->
-<!-- 					<div id="chart4" class="multi-chart"></div> -->
-<!-- 					<div id="chart5" class="multi-chart"></div> -->
-<!-- 					<div id="chart6" class="multi-chart"></div> -->
-<!-- 				</div> -->
-				
-				<div class="single">
-					<div id="chartMain"></div>
-				</div>
-				
-				<div class="spinner">
-				  <div class="rect1"></div>
-				  <div class="rect2"></div>
-				  <div class="rect3"></div>
-				  <div class="rect4"></div>
-				  <div class="rect5"></div>
-				</div>
+
+
+			<div class="single">
+				<div id="chartMain" ></div>
 			</div>
+
+			<div class="spinner">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</div>
 
 		</div>
 	
 	<!-- 引入 ECharts 文件 -->
-    <!--<script src="js/echarts3/echarts.js"></script>-->
-	<script src="js/echarts-2.2.7/build/dist/echarts.js"></script>
-    <script type="text/javascript" src="js/vennindex.js"></script>
+    <script src="js/echarts3/echarts.js"></script>
+    <script type="text/javascript" src="js/industrycharts.js"></script>
+	<script type="text/javascript" src="js/industry.js"></script>
 </body>
 
 </html>
