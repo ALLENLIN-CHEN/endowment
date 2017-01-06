@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+
+.list_lh{ height:180px; overflow:hidden;}
+.list_lh li{ padding:10px;}
+.list_lh li.lieven{
+
+}
+.list_lh li p{ height:24px; line-height:24px;}
+.list_lh li p a{ float:left;}
+.list_lh li p em{ width:80px; font:normal 12px/24px Arial; color:rgba(255, 255, 255, 0.498039); float:right; display:inline-block;}
+.list_lh li p span{ color:#999; float:right;}
+.list_lh li p a.btn_lh{ background:#28BD19; height:17px; line-height:17px; color:#fff; padding:0 5px; margin-top:4px; display:inline-block; float:right;}
+.btn_lh:hover{ color:#fff; text-decoration:none;}
+
+.btm p{ font:normal 12px/24px 'Microsoft YaHei'; text-align:center;}
