@@ -26,7 +26,7 @@ function getIndustryLine(res) {
 	var categoryData=[];
 	var totallist=res.data.industrylist;
 	var industryname=res.data.industry_code;
-	console.log(industryname);
+	// console.log(industryname);
 	var index = 0;
 	var temp=0;
 	for(index = 0; index < totallist.length; index++) {
@@ -138,7 +138,7 @@ function getIndustryFunnel(res) {
 		var temp_sum=data.sumlist[index];
 		for(var i = 0; i < industryModellist.length; i++) {
 			datalist.push({
-				name:industryModellist[i].age,
+				name:industryModellist[i].age.trim(),
 				value:(industryModellist[i].person_num/temp_sum*100).toFixed(2)});
 		}
 		yearlist.push(data.yearlist[index]+"年");
@@ -221,9 +221,12 @@ function getIndustryBar(res) {
 	for(var index in data.yearlist) {
 		var industryModellist=data.industrymap[data.yearlist[index]];
 		var categorylist=[],datalist=[];
-		for(var i = 0; i < Math.min(industryModellist.length,10); i++) {
-			categorylist.push(industryModellist[i].industry_code);
-			datalist.push(industryModellist[i].cardinality);
+		for(var i = 0; i < industryModellist.length; i++) {
+			industryModellist[i].cardinality=industryModellist[i].cardinality.toFixed(2);
+			if(i<10) {
+				categorylist.push(industryModellist[i].industry_code);
+				datalist.push(industryModellist[i].cardinality);
+			}
 		}
 		yearlist.push(data.yearlist[index]+"年");
 		timeLineOptions.push({

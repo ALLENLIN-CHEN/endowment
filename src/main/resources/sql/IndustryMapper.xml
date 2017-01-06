@@ -42,7 +42,7 @@
 		when (year(base_date)-year(birthday)>25) then "25岁—30岁"
 		when (year(base_date)-year(birthday)>22) then "22岁—25岁"
 		when (year(base_date)-year(birthday)>=18) then "18岁—22岁"
-		else "18岁以下 " end as "age",
+		else "18岁以下" end as "age",
 		count(distinct person.social_security_card) as "person_num"
 		from company_social_security inner join person
 		on company_social_security.social_security_card=person.social_security_card
@@ -59,7 +59,7 @@
 		when (year(base_date)-year(birthday)>25) then "25岁—30岁"
 		when (year(base_date)-year(birthday)>22) then "22岁—25岁"
 		when (year(base_date)-year(birthday)>=18) then "18岁—22岁"
-		else "18岁以下 " end as "age",
+		else "18岁以下" end as "age",
 		count(distinct person.social_security_card) as "person_num"
 		from company_social_security inner join person
 		on company_social_security.social_security_card=person.social_security_card
