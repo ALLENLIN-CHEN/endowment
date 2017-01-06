@@ -227,6 +227,7 @@ function getIndustryBar(res) {
 		}
 		yearlist.push(data.yearlist[index]+"年");
 		timeLineOptions.push({
+			industryModellist:industryModellist,
 			title : {text: yearlist[index]+'各行业参保基数TOP10'},
 			yAxis : [
 				{
@@ -288,7 +289,30 @@ function getIndustryBar(res) {
 			    },
 				toolbox: {
 					feature: {
-						dataView: {readOnly: true},
+						// dataView: {readOnly: true},
+						dataView : {
+							show : true,
+							title : '数据视图',
+							readOnly: true,
+							lang : ['数据视图', '关闭', '刷新'],
+							optionToContent: function(opt) {
+								var industryModellist = opt.industryModellist;
+								var table = '<div style="width:100%; height:100%; overflow:auto;"><table border="1px" align="left" cellspacing="0" cellpadding="0" style="width:600px;text-align:center;background:#ccccccc"><tbody><tr style="background:#1e90ff">'
+									+ '<td width="40px">No</td>'
+									+ '<td width="70px">行业名称</td>'
+									+ '<td width="70px">行业参保基数(元) </td>'
+									+ '</tr>';
+								for (var i = 0, l = industryModellist.length; i < l; i++) {
+									table += '<tr>'
+										+ '<td>' + (i+1) + '</td>'
+										+ '<td>' + industryModellist[i].industry_code + '</td>'
+										+ '<td>' + industryModellist[i].cardinality + '</td>'
+										+ '</tr>';
+								}
+								table += '</tbody></table></div>';
+								return table;
+							}
+						},
 						saveAsImage: {}
 					}
 				},
