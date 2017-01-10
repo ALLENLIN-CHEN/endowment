@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Map;
 
-//echarts字符云
 @Controller  
 @RequestMapping(value = "/charts/base_3", produces="application/json;charset=UTF-8")
 public class Base_3Controller {
@@ -42,6 +41,13 @@ public class Base_3Controller {
     @ResponseBody
     public List<String> getBase_3(){
         List<String> data = this.base_3Service.getBase_3Financial();
+        return data;
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public Map<String, Object> get_test() {
+        Map<String, Object> data = this.base_3Service.getMaptest();
         return data;
     }
 }   

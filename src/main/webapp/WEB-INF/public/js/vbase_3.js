@@ -32,23 +32,23 @@ $(function() {
 	/***********************************************************************************************************/
 
 	//主题点击
-	$('.item').on('click', function() {
-		//清除定时器
-		clearInterval(timer);
-
-		$('.right-content .single').hide();
-		$('.time_wrap').hide();
-		$('.right-content .multi').show();
-		$('.sub-item-wrap.active').removeClass('active');
-		var self = $(this);
-		if(!self.hasClass('active')) {
-			$('.sub-' + $('.item.active').data('index')).slideToggle();
-			$('.item.active').removeClass('active');
-			self.addClass('active');
-			$('.sub-' + self.data('index')).slideToggle();
-		}
-		//	setMultiCharts();
-	});
+	// $('.item').on('click', function() {
+	// 	//清除定时器
+	// 	clearInterval(timer);
+    //
+	// 	$('.right-content .single').hide();
+	// 	$('.time_wrap').hide();
+	// 	$('.right-content .multi').show();
+	// 	$('.sub-item-wrap.active').removeClass('active');
+	// 	var self = $(this);
+	// 	if(!self.hasClass('active')) {
+	// 		$('.sub-' + $('.item.active').data('index')).slideToggle();
+	// 		$('.item.active').removeClass('active');
+	// 		self.addClass('active');
+	// 		$('.sub-' + self.data('index')).slideToggle();
+	// 	}
+	// 	//	setMultiCharts();
+	// });
 
 	$(document).on('click', '.sub-item-wrap .type', function() {
 		//清除定时器
@@ -58,10 +58,12 @@ $(function() {
 		}
 		myChart = echarts.init(document.getElementById('chartMain'));
 
-		if($(this).data('no-init')) {
-			document.getElementById('financial_wrap').style.visibility="visible";
-		}else {
+		if(!$(this).data('no-init')) {
 			document.getElementById('financial_wrap').style.visibility="hidden";
+			$('.financial_wrap').hide();
+		}else {
+			document.getElementById('financial_wrap').style.visibility="visible";
+			$('.financial_wrap').show();
 		}
 
 		showLoading();
@@ -92,7 +94,7 @@ $(function() {
 	/**
 	 * 绑定经济类型查询的确定按钮
 	 */
-	$(document).on('click', '.time_wrap .financial_search', function() {
+	$(document).on('click', '.financial_wrap .financial_search', function() {
 		showLoading();
 
 		var financial = $('.startTime').val();
@@ -133,9 +135,13 @@ $(function() {
 function handleCharts(data) {
 	$('.right-content .single').show();
 
-	option = getCharts(data);
+	if(data.type!="test"){
+		option = getCharts(data);
 
-	myChart.setOption(option);
+		myChart.setOption(option);
+	}else {
+		option = getCharts(data);
+	}
 
 	hideLoading();
 }
