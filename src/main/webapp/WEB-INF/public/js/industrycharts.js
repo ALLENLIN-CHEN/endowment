@@ -26,7 +26,7 @@ function getIndustryLine(res) {
 	var categoryData=[];
 	var totallist=res.data.industrylist;
 	var industryname=res.data.industry_code;
-	console.log(industryname);
+	// console.log(industryname);
 	var index = 0;
 	var temp=0;
 	for(index = 0; index < totallist.length; index++) {
@@ -138,7 +138,7 @@ function getIndustryFunnel(res) {
 		var temp_sum=data.sumlist[index];
 		for(var i = 0; i < industryModellist.length; i++) {
 			datalist.push({
-				name:industryModellist[i].age,
+				name:industryModellist[i].age.trim(),
 				value:(industryModellist[i].person_num/temp_sum*100).toFixed(2)});
 		}
 		yearlist.push(data.yearlist[index]+"年");
@@ -221,12 +221,16 @@ function getIndustryBar(res) {
 	for(var index in data.yearlist) {
 		var industryModellist=data.industrymap[data.yearlist[index]];
 		var categorylist=[],datalist=[];
-		for(var i = 0; i < Math.min(industryModellist.length,10); i++) {
-			categorylist.push(industryModellist[i].industry_code);
-			datalist.push(industryModellist[i].cardinality);
+		for(var i = 0; i < industryModellist.length; i++) {
+			industryModellist[i].cardinality=industryModellist[i].cardinality.toFixed(2);
+			if(i<10) {
+				categorylist.push(industryModellist[i].industry_code);
+				datalist.push(industryModellist[i].cardinality);
+			}
 		}
 		yearlist.push(data.yearlist[index]+"年");
 		timeLineOptions.push({
+			industryModellist:industryModellist,
 			title : {text: yearlist[index]+'各行业参保基数TOP10'},
 			yAxis : [
 				{
@@ -288,7 +292,30 @@ function getIndustryBar(res) {
 			    },
 				toolbox: {
 					feature: {
-						dataView: {readOnly: true},
+						// dataView: {readOnly: true},
+						dataView : {
+							show : true,
+							title : '数据视图',
+							readOnly: true,
+							lang : ['数据视图', '关闭', '刷新'],
+							optionToContent: function(opt) {
+								var industryModellist = opt.industryModellist;
+								var table = '<div style="width:100%; height:100%; overflow:auto;"><table border="1px" align="left" cellspacing="0" cellpadding="0" style="width:600px;text-align:center;background:#ccccccc"><tbody><tr style="background:#1e90ff">'
+									+ '<td width="40px">No</td>'
+									+ '<td width="70px">行业名称</td>'
+									+ '<td width="70px">行业参保基数(元) </td>'
+									+ '</tr>';
+								for (var i = 0, l = industryModellist.length; i < l; i++) {
+									table += '<tr>'
+										+ '<td>' + (i+1) + '</td>'
+										+ '<td>' + industryModellist[i].industry_code + '</td>'
+										+ '<td>' + industryModellist[i].cardinality + '</td>'
+										+ '</tr>';
+								}
+								table += '</tbody></table></div>';
+								return table;
+							}
+						},
 						saveAsImage: {}
 					}
 				},

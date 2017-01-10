@@ -110,9 +110,18 @@ function getDifCompany(data) {
 			    },
 				calculable: true,
 				series: [
-			         {
-			        	type: 'bar'
-			         }
+					{
+						type: 'bar',
+						barWidth: 50,
+						itemStyle: {
+							normal: {
+								barBorderRadius: 20,
+								color: '#03a9f4',
+								shadowColor: 'rgba(0, 0, 0, 0.4)',
+								shadowBlur: 20
+							}
+						}
+					}
 				]
 			},
 			options: timeLineOptions
@@ -296,9 +305,9 @@ function getSamCompany(data) {
 				axisType: 'category',
 				autoPlay: true,
 				playInterval: 3000,
-				orient: 'vertical',
+				orient:'vertical',
 				inverse: true,
-				right: 10,
+				right: 0,
 				top: 150,
 				bottom: 10,
 				width: 60,
@@ -320,40 +329,32 @@ function getSamCompany(data) {
 					saveAsImage: {}
 				}
 			},
+			grid:{
+				left:'0%',
+				top:'10%',
+				bottom:'0',
+				containLabel: true
+			},
 			xAxis : [
 				{
-					type : 'category',
-					axisTick : {show: false},
-					axisLabel:{
-						interval:0,
-						rotate:15
-					},
-					data : industry_codes
+
+					type : 'value',
+					boundaryGap: [0, 0.01]
 				}
 			],
 			yAxis : [
 				{
-					type : 'value'
+					type : 'category',
+					data : industry_codes
 				}
 			],
-			grid: {
-				left: '3%',
-				right: '7%',
-				containLabel: true
-			},
 			calculable: true,
 			series: [
 				{
 					type: 'bar',
+					barWidth:35,
 					itemStyle: {
-						normal: {
-							barBorderColor: '#FFD700',
-							color: '#FFD700'
-						},
-						emphasis: {
-							barBorderColor: '#FFD700',
-							color: '#FFD700'
-						}
+						normal: {color: '#5CACEE'}
 					}
 				}
 			]

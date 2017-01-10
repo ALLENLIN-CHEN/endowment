@@ -34,23 +34,23 @@ $(function() {
 	$('.industry_wrap').hide();
 
 	//主题点击
-	$('.item').on('click', function() {
-		//清除定时器
-		clearInterval(timer);
-
-		$('.right-content .single').hide();
-		$('.right-content .multi').show();
-		$('.sub-item-wrap.active').removeClass('active');
-		var self = $(this);
-		if(!self.hasClass('active')) {
-			$('.sub-' + $('.item.active').data('index')).slideToggle();
-			$('.item.active').removeClass('active');
-			self.addClass('active');
-			$('.sub-' + self.data('index')).slideToggle();
-		}
-
-		//	setMultiCharts();
-	});
+	// $('.item').on('click', function() {
+	// 	//清除定时器
+	// 	clearInterval(timer);
+    //
+	// 	$('.right-content .single').hide();
+	// 	$('.right-content .multi').show();
+	// 	$('.sub-item-wrap.active').removeClass('active');
+	// 	var self = $(this);
+	// 	if(!self.hasClass('active')) {
+	// 		$('.sub-' + $('.item.active').data('index')).slideToggle();
+	// 		$('.item.active').removeClass('active');
+	// 		self.addClass('active');
+	// 		$('.sub-' + self.data('index')).slideToggle();
+	// 	}
+    //
+	// 	//	setMultiCharts();
+	// });
 
 	$(document).on('click', '.sub-item-wrap .type', function() {
 		//清除定时器

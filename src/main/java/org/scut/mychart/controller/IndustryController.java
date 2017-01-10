@@ -53,4 +53,12 @@ public class IndustryController {
 		result.put("data",industryService.getIndustry_BarOption());
 		return result;
 	}
+	@RequestMapping("/getThemeOption")
+	@ResponseBody
+	public Map<String, Object> getThemeOption(){
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("type","ThemeOption");
+		result.put("data",industryService.getIndustryThemeOption());
+		return result;
+	}
 }
