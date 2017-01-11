@@ -72,7 +72,7 @@ $(function() {
 		
 		$('.sub-item-wrap.active').removeClass('active');
 		$(this).parent().addClass('active');
-		
+
 		var url = $(this).data('url');
 		$.ajax({
 			type: 'GET',
@@ -110,7 +110,7 @@ $(function() {
 					value: age[rangeDescs[rindex]]
 				});
 			}
-			
+
 			timeLineOptions.push({
 				title : {text: props[index] + '年年龄段占比'},
 				series: [
@@ -120,10 +120,10 @@ $(function() {
 				]
 			});
 		}
-		
+
 		option.baseOption.tooltip.formatter = type + "<br/>{b} : {c}%";
 		option.options = timeLineOptions;
-		
+
 		myChart.setOption(option);
 		hideLoading();
 	});

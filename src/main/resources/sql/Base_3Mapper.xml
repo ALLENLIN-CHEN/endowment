@@ -4,10 +4,11 @@
 	<!-- 开启二级缓存 -->
 	<cache size="1024" readOnly="true" />
 	<select id="selectBase_3_2" parameterType="java.util.Map" resultType="org.scut.mychart.model.Base_3" statementType="STATEMENT">
-		SELECT year(base_date) as year,financial_type as financial_type,sex as sex, count(distinct company_social_security.social_security_card) as person_num FROM company_social_security
+		SELECT year(base_date) as year,sex as sex, count(distinct company_social_security.social_security_card) as person_num FROM company_social_security
         join person on company_social_security.social_security_card = person.social_security_card
-        group by year,financial_type,sex
-        order by financial_type,year,sex
+        ${financial}
+        group by year,sex
+        order by year,sex
 	</select>
 	<select id="selectBase_3_3" parameterType="java.util.Map" resultType="org.scut.mychart.model.Base_3" statementType="STATEMENT">
         select year(base_date) as "year",
@@ -16,11 +17,11 @@
 		when (year(base_date)-year(birthday)>30) then "30岁--40岁"
         when (year(base_date)-year(birthday)>25) then "25岁--30岁"
         when (year(base_date)-year(birthday)>22) then "22岁--25岁"
-		else "18--22岁" end as "age",
+		else "18岁--22岁" end as "age",
 		count(distinct person.social_security_card) as "person_num"
 		from company_social_security inner join person
 		on company_social_security.social_security_card=person.social_security_card
-		where financial_type = "${financial}"
+		${financial}
 		group by year,age
 		order by year,age
 	</select>

@@ -16,9 +16,16 @@ public class Base_3ServiceImpl implements Base_3Service {
 	public List<Base_3> getBase_3(int title,String f){
 		HashMap<String,String> param = new HashMap<String,String>();
 		switch (title){
-			case 2:return this.base_3Dao.selectBase_3_2(new HashMap());
+			case 2:{
+				if(!f.equals("全经济类型")){
+					param.put("financial","where financial_type = \""+f+"\"");
+				}
+				return this.base_3Dao.selectBase_3_2(param);
+			}
 			case 3:{
-				param.put("financial",f);
+				if(!f.equals("全经济类型")){
+					param.put("financial","where financial_type = \""+f+"\"");
+				}
 				return this.base_3Dao.selectBase_3_3(param);
 			}
 			case 4:return this.base_3Dao.selectBase_3_4(new HashMap());
@@ -27,10 +34,10 @@ public class Base_3ServiceImpl implements Base_3Service {
 		return  null;
 	}
 
-	public Map<String, Object> getBase_3_2ChartOption(){
+	public Map<String, Object> getBase_3_2ChartOption(String f){
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		Map<String, Object> data = new HashMap<String, Object>();
-		List<Base_3> lists = getBase_3(2,null);
+		List<Base_3> lists = getBase_3(2,f);
 		Map<String, Object> financial_type = new HashMap<String, Object>();
 		List<Integer> male = new ArrayList<Integer>();
 		List<Integer> female = new ArrayList<Integer>();
@@ -46,7 +53,7 @@ public class Base_3ServiceImpl implements Base_3Service {
 				female.add(list.getperson_num());
 			}
 			if(list.getyear()==2015&&list.getsex().equals("男")){
-				financial_type.put("financial_name",list.getFinancial_type());
+				financial_type.put("financial_name",f);
 				financial_type.put("male",male);
 				financial_type.put("female",female);
 				result.add(financial_type);
@@ -78,6 +85,7 @@ public class Base_3ServiceImpl implements Base_3Service {
 			if(y!=list.getyear()){
 				age = new ArrayList<String>();
 				person_num = new ArrayList<Integer>();
+				year = new HashMap<String, Object>();
 				y=list.getyear();
 			}
 			age.add(list.getage());

@@ -1,0 +1,97 @@
+
+/* Getting the new tags to behave */
+article, aside, audio, canvas, command, datalist, details, embed, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video{ display: block; }
+mark, rp, rt, ruby, summary, time{ display: inline }
+
+/* Left & Right alignment */
+
+.left { float:left;}
+.right { float:right;}
+.wrapper {width:100%; overflow:hidden;}
+
+/* Global properties ======================================================== */
+
+.css3{border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; box-shadow: 0 0 4px rgba(0, 0, 0, .4); -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .4); -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .4); position: relative;}
+
+/* Global Structure ============================================================= */
+
+.main {	margin: 0 auto;	width: 940px; position:relative; z-index:1}
+
+.spinner{ background: url(../images/bg.gif) top center repeat; position: fixed; top:0; left:0; width:100%; height:100%; z-index:99;}
+.spinner > div{ position:absolute; top:0; left:0; width:100%; height:100%; background:url(../images/bg_img.jpg) top center no-repeat;}
+.spinner > div > div{ position:absolute; top:0; left:0; width:100%; height:100%; background:url(../images/ajax-loader.gif) 50% 50% no-repeat}
+
+
+.block {height:52px;}
+.extra {min-height:100%; height:auto !important; height:100%; margin: 0 auto -52px; background:url(../images/bg_img.jpg) top center no-repeat;}
+body, html {height:100%;}
+
+/* ============================= main layout ====================== */
+
+a{ color:#5e5e5e; text-decoration: underline; outline:none}
+a:hover{ text-decoration: none}
+h1{ padding:61px 0 0 0; float: left;}
+h2{ font:24px Arial, Helvetica, sans-serif; color:#fff; line-height:1.2em; letter-spacing:-1px; padding-bottom:6px;}
+h3{ font:24px Arial, Helvetica, sans-serif; color:#fff; line-height:1.2em; letter-spacing:-1px; padding:26px 0 0px 0; text-align:center; min-height:87px;}
+h3 span{ display:block; margin-top:-5px;}
+p{ padding-bottom:22px;}
+
+/* ============================= header ====================== */
+/* Tooltips */
+.aToolTip {	border:1px solid #fff; background:#000; color:#fff;	margin:0; padding:0px 5px; font-size:11px;	}
+.aToolTip .aToolTipContent { position:relative;	margin:0; padding:0; }
+
+.menu_box{ width:252px; height:252px; position: absolute; top:-48px; left:-44px}
+.menu_box .images{ position:absolute; top:0; left:0; width:100%; height:100%;}
+.images span{ display:block; position:absolute; width:100%; height:100%}
+.images .nav1{ background:url(../images/nav1_hover.png) 0 0 no-repeat}
+.images .nav2{ background:url(../images/nav2_hover.png) 0 0 no-repeat}
+.images .nav3{ background:url(../images/nav3_hover.png) 0 0 no-repeat}
+.images .nav4{ background:url(../images/nav4_hover.png) 0 0 no-repeat}
+.images .nav5{ background:url(../images/nav5_hover.png) 0 0 no-repeat}
+.images .nav6{ background:url(../images/nav6_hover.png) 0 0 no-repeat}
+.images .nav7{ background:url(../images/nav7_hover.png) 0 0 no-repeat}
+.images .nav8{ background:url(../images/nav8.png) 0 0 no-repeat}
+.images .nav9{ background:url(../images/nav1_hover.png) 0 0 no-repeat}
+
+#menu {display:block; width:252px; height:252px;}
+#menu > li {}
+#menu > li > a{ position:relative; display:block; width:168px; height:168px;}
+#menu > li > a img{ position:absolute; top:0; left:0; width:100%; height:100%;}
+#menu > li > a:hover{ }
+
+ul.reset li {
+position:absolute;
+}
+
+.inner{ width:252px; height:252px; position:relative; margin-top:255px; margin-left:387px;}
+.trigger{ width:0px !important; height:0px !important; font-size:0; line-height:0}
+
+.menu{ z-index:1; position:relative}
+.menu_box{ z-index:99}
+
+.tittles{ text-align:center; line-height:18px; position:relative;}
+.tittles > div{ width:150px; padding-left:51px; position: absolute; top:0; left:0; padding-top:88px;}
+.tittles .nav1{ padding-top:112px;}
+.tittles .nav2{ padding-top:112px;}
+.tittles .nav2:hover{}
+.tittles .nav3{ padding-top:112px;}
+.tittles .nav4{ padding-top:112px;}
+.tittles .nav4 .addit_menu{}
+.tittles .nav5, .tittles .nav6, .tittles .nav7, .tittles .nav8, .tittles .nav9{padding-top:112px;}
+
+/* ============================= content ====================== */
+
+#content, #content > ul{ height:729px; position:relative; width:100%; overflow:hidden}
+
+#content > ul > li{ position:absolute; width:673px; height:673px; right:0; top:50%; margin-top:-345px; visibility:hidden}
+#page_0{ height:630px; width:100%; top:50%; margin-top:-365px; right:auto; left:0; visibility:visible}
+
+.box{ position:relative; top:0; left:0; width:673px; height:673px;}
+.box_img{ position:absolute; width:0; height:0; top:337px; left:337px; z-index:1}
+.text{ position:relative; padding:90px; z-index:2}
+
+
+
+
+

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Map;
 
-//echarts字符云
 @Controller  
 @RequestMapping(value = "/charts/base_3", produces="application/json;charset=UTF-8")
 public class Base_3Controller {
@@ -19,8 +18,8 @@ public class Base_3Controller {
 
     @RequestMapping("/base_3_2")
     @ResponseBody
-    public Map<String, Object> getBase_3_2(){
-        Map<String, Object> data = this.base_3Service.getBase_3_2ChartOption();
+    public Map<String, Object> getBase_3_2(@RequestParam String financial_type){
+        Map<String, Object> data = this.base_3Service.getBase_3_2ChartOption(financial_type);
         return data;
     }
 
@@ -44,5 +43,12 @@ public class Base_3Controller {
         List<String> data = this.base_3Service.getBase_3Financial();
         return data;
     }
+
+//    @RequestMapping("/test")
+//    @ResponseBody
+//    public Map<String, Object> get_test() {
+//        Map<String, Object> data = this.base_3Service.getMaptest();
+//        return data;
+//    }
 }   
 

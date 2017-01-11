@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+    <title>社保大数据业务平台</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+
+    <link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" />
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" />
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+	<!-- 用于图表展示与控制样式 -->
+	<link href="css/difindex.css" rel="stylesheet">
+	<!-- 滚动条样式 -->
+	<link href="css/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="js/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="js/hideshow.js" type="text/javascript"></script>
+    <script src="js/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/jquery.equalHeight.js"></script>
+    </script>
+
+<!--     <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script> -->
+<!--     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script> -->
+<!--     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script> -->
+    <script type="text/javascript" src="js/analysis0.js"></script>
+    <script type="text/javascript" src="js/analysis1.js"></script>
+    <script type="text/javascript" src="js/analysis2.js"></script>
+    <script type="text/javascript" src="js/analysis3.js"></script>
+    <script type="text/javascript" src="js/analysis4.js"></script>
+    <script type="text/javascript" src="js/analysis5.js"></script>
+    <script type="text/javascript" src="js/analysis6.js"></script>
+    <script type="text/javascript" src="js/analysis7.js"></script>
+    <script type="text/javascript" src="js/analysis8.js"></script>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top navbar-inverse" >
+	    <div class="container">
+	        <a id="logo" href="/">社保大数据业务平台</a>
+	        <nav>
+	            <ul class="nav navbar-nav pull-right">
+	                <li><a href="https://rubytutorial-jungieve.c9users.io/">主页</a></li>
+	                <li><a href="https://rubytutorial-jungieve.c9users.io/help">帮助</a></li>
+	                <li><a href="/ETL/html/index.html">预处理</a></li>
+	                <li><a href="/olap/">OLAP分析</a></li>
+	                <li><a href="/openreports/">报表展示</a></li>
+	                <li><a href="/mychart/test.html">业务样例</a></li>
+	                <li><a href="https://rubytutorial-jungieve.c9users.io/users">其他成员</a></li>
+	                <li class="dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">账户</a>
+	                </li>
+	            </ul>
+	        </nav>
+	    </div>
+	</div>
+	
+	<!-- 图表展示与控制容器 -->
+	<div class="scut-container">
+			<div class="left-content">
+				<div class="item active" data-id="theme1"  data-index="1">
+					<label>企业员工参保基数统计分析</label>
+				</div>
+				<div class="sub-1 sub-item" style="display:block;">
+					<div class="sub-item-wrap">
+						<i class="icon"></i>
+						<div class="type" data-url="charts/dif/difCompany" data-no-init1="1">同一行业不同单位类型员工参保基数情况</div>
+					</div>
+					<div class="sub-item-wrap1">
+						<i class="icon"></i>
+						<div class="type" data-url="charts/dif/difFinancial" data-no-init2="1">同一行业不同经济类型员工参保基数情况</div>
+					</div>
+					<div class="sub-item-wrap2">
+						<i class="icon"></i>
+						<div class="type" data-url="charts/dif/samCompany" data-no-init3="1">同一单位类型不同行业员工参保基数情况</div>
+					</div>
+					<div class="sub-item-wrap3">
+						<i class="icon"></i>
+						<div class="type" data-url="charts/dif/samFinancial" data-no-init4="1">同一经济类型不同行业员工参保基数情况</div>
+					</div>
+					<div class="sub-item-wrap4">
+						<i class="icon"></i>
+						<div class="type" ><a href="bigscreenshow.html">企业员工参保基数统计分析大屏展示</a></div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="right-content">
+				<div class="difCompany_wrap">
+					<div class="form-group clearfix">
+						<label class="control-label col-sm-2">行业类型</label>
+						<div class="col-sm-2">
+							<select class="form-control industry_code">
+								<option value="科学研究、技术服务和地质勘查业（一类）">科学研究、技术服务和地质勘查业（一类）</option>
+								<option value="制造业(二类)">制造业(二类)</option>
+								<option value="信息传输、计算机服务和软件业">信息传输、计算机服务和软件业</option>
+								<option value="电力、燃气及水生产和供应">电力、燃气及水生产和供应</option>
+								<option value="国际组织">国际组织</option>
+								<option value="建筑业">建筑业</option>
+								<option value="制造业(三类)">制造业(三类)</option>
+								<option value="教育">教育</option>
+								<option value="公共管理和社会组织">公共管理和社会组织</option>
+								<option value="交通运输、仓储和邮政业(一类)">交通运输、仓储和邮政业(一类)</option>
+								<option value="采矿业">采矿业</option>
+								<option value="房地产业">房地产业</option>
+								<option value="交通运输、仓储和邮政业(二类)">交通运输、仓储和邮政业(二类)</option>
+								<option value="农林牧渔业">农林牧渔业</option>
+								<option value="居民服务和其它服务业">居民服务和其它服务业</option>
+								<option value="租赁和商务服务业">租赁和商务服务业</option>
+								<option value="科学研究、技术服务和地质勘查业（二类）">科学研究、技术服务和地质勘查业（二类）</option>
+								<option value="住宿和餐饮业">住宿和餐饮业</option>
+								<option value="水利、环境和公共设施管理业)">水利、环境和公共设施管理业)</option>
+								<option value="卫生、社会保障和社会福利业">卫生、社会保障和社会福利业</option>
+								<option value="文化、体育和娱乐业(二类)">文化、体育和娱乐业(二类)</option>
+								<option value="金融业">金融业</option>
+								<option value="文化、体育和娱乐业(一类)">文化、体育和娱乐业(一类)</option>
+								<option value="批发零售业">批发零售业</option>
+							</select>
+						</div>
+						<button type="button" class="btn btn-primary col-sm-1 search">搜索</button>
+					</div>
+				</div>
+				<div class="difFinancial_wrap">
+					<div class="form-group clearfix">
+						<label class="control-label col-sm-2">行业类型</label>
+						<div class="col-sm-2">
+							<select class="form-control industry_code">
+								<option value="科学研究、技术服务和地质勘查业（一类）">科学研究、技术服务和地质勘查业（一类）</option>
+								<option value="制造业(二类)">制造业(二类)</option>
+								<option value="信息传输、计算机服务和软件业">信息传输、计算机服务和软件业</option>
+								<option value="电力、燃气及水生产和供应">电力、燃气及水生产和供应</option>
+								<option value="国际组织">国际组织</option>
+								<option value="建筑业">建筑业</option>
+								<option value="制造业(三类)">制造业(三类)</option>
+								<option value="教育">教育</option>
+								<option value="公共管理和社会组织">公共管理和社会组织</option>
+								<option value="交通运输、仓储和邮政业(一类)">交通运输、仓储和邮政业(一类)</option>
+								<option value="采矿业">采矿业</option>
+								<option value="房地产业">房地产业</option>
+								<option value="交通运输、仓储和邮政业(二类)">交通运输、仓储和邮政业(二类)</option>
+								<option value="农林牧渔业">农林牧渔业</option>
+								<option value="居民服务和其它服务业">居民服务和其它服务业</option>
+								<option value="租赁和商务服务业">租赁和商务服务业</option>
+								<option value="科学研究、技术服务和地质勘查业（二类）">科学研究、技术服务和地质勘查业（二类）</option>
+								<option value="住宿和餐饮业">住宿和餐饮业</option>
+								<option value="水利、环境和公共设施管理业)">水利、环境和公共设施管理业)</option>
+								<option value="卫生、社会保障和社会福利业">卫生、社会保障和社会福利业</option>
+								<option value="文化、体育和娱乐业(二类)">文化、体育和娱乐业(二类)</option>
+								<option value="金融业">金融业</option>
+								<option value="文化、体育和娱乐业(一类)">文化、体育和娱乐业(一类)</option>
+								<option value="批发零售业">批发零售业</option>
+							</select>
+						</div>
+						<button type="button" class="btn btn-primary col-sm-1 search">搜索</button>
+					</div>
+				</div>
+				<div class="samCompany_wrap">
+					<div class="form-group clearfix">
+						<label class="control-label col-sm-2">单位类型</label>
+						<div class="col-sm-2">
+							<select class="form-control company_type">
+								<option value="全额拨款事业单位">全额拨款事业单位</option>
+								<option value="差额拨款事业单位">差额拨款事业单位</option>
+								<option value="民办非企业单位">民办非企业单位</option>
+								<option value="社团">社团</option>
+								<option value="事业单位">事业单位</option>
+								<option value="企业">企业</option>
+								<option value="虚拟单位">虚拟单位</option>
+								<option value="再就业服务中心">再就业服务中心</option>
+								<option value="城镇个体工商户">城镇个体工商户</option>
+								<option value="机关">机关</option>
+								<option value="其他">其他</option>
+								<option value="自收自支事业单位">自收自支事业单位</option>
+							</select>
+						</div>
+						<button type="button" class="btn btn-primary col-sm-1 search">搜索</button>
+					</div>
+				</div>
+				<div class="samFinancial_wrap">
+					<div class="form-group clearfix">
+						<label class="control-label col-sm-2">经济类型</label>
+						<div class="col-sm-2">
+							<select class="form-control financial_type">
+								<option value="股份有限（公司）">股份有限（公司）</option>
+								<option value="中外合作">中外合作</option>
+								<option value="虚拟失业人员待遇享受单位">虚拟失业人员待遇享受单位</option>
+								<option value="个体经营">个体经营</option>
+								<option value="其他国外投资">其他国外投资</option>
+								<option value="全额拨款事业单位">全额拨款事业单位</option>
+								<option value="私营股份有限（公司）">私营股份有限（公司）</option>
+								<option value="外商投资经济">外商投资经济</option>
+								<option value="差额拨款事业单位">差额拨款事业单位</option>
+								<option value="社区工作者单位">社区工作者单位</option>
+								<option value="私营独资">私营独资</option>
+								<option value="国有独资（公司）">国有独资（公司）</option>
+								<option value="私营合伙">私营合伙</option>
+								<option value="民办非企业单位">民办非企业单位</option>
+								<option value="军转干—社区">军转干—社区</option>
+								<option value="国家拨款社会团体">国家拨款社会团体</option>
+								<option value="改制科研院所、事业单位">改制科研院所、事业单位</option>
+								<option value="村改居养老人员单位">村改居养老人员单位</option>
+								<option value="私营有限责任（公司）">私营有限责任（公司）</option>
+								<option value="街属集体经济">街属集体经济</option>
+								<option value="特困企业退休">特困企业退休</option>
+								<option value="支疆人员(2000092)">支疆人员(2000092)</option>
+								<option value="其他社会团体">其他社会团体</option>
+								<option value="政府买岗“保安、保绿、保洁”">政府买岗“保安、保绿、保洁”</option>
+								<option value="联营经济">联营经济</option>
+								<option value="国外投资股份有限（公司）">国外投资股份有限（公司）</option>
+								<option value="私营经济">私营经济</option>
+								<option value="国家机关和党政机关">国家机关和党政机关</option>
+								<option value="军转干—企业">军转干—企业</option>
+								<option value="其他内资">其他内资</option>
+								<option value="其他机关">其他机关</option>
+								<option value="外资">外资</option>
+								<option value="乡镇事业单位">乡镇事业单位</option>
+								<option value="股份制经济">股份制经济</option>
+								<option value="流动虚拟单位">流动虚拟单位</option>
+								<option value="港澳、台商投资股份有限">港澳、台商投资股份有限</option>
+								<option value="国有与集体联营">国有与集体联营</option>
+								<option value="国有联营">国有联营</option>
+								<option value="民政部门管理条例范围类社会团体">民政部门管理条例范围类社会团体</option>
+								<option value="集体联营">集体联营</option>
+								<option value="中外合资">中外合资</option>
+								<option value="港澳、台商独资经营">港澳、台商独资经营</option>
+								<option value="其他有限责任（公司）">其他有限责任（公司）</option>
+								<option value="其他联营">其他联营</option>
+								<option value="再就业服务中心（50%）">再就业服务中心（50%）</option>
+								<option value="港澳、台资合作经营">港澳、台资合作经营</option>
+								<option value="其他">其他</option>
+								<option value="经费自筹事业单位">经费自筹事业单位</option>
+								<option value="其他私有">其他私有</option>
+								<option value="港、澳、台投资">港、澳、台投资</option>
+								<option value="港澳、台资合资经营">港澳、台资合资经营</option>
+								<option value="其他港、澳、台投资">其他港、澳、台投资</option>
+								<option value="内资">内资</option>
+								<option value="个体经济">个体经济</option>
+								<option value="农垦">农垦</option>
+								<option value="国有经济">国有经济</option>
+								<option value="集体经济">集体经济</option>
+							</select>
+						</div>
+						<button type="button" class="btn btn-primary col-sm-1 search">搜索</button>
+					</div>
+				</div>
+
+				<div class="single">
+					<div id="chartMain"></div>
+				</div>
+
+				<div class="spinner">
+					<div class="rect1"></div>
+					<div class="rect2"></div>
+					<div class="rect3"></div>
+					<div class="rect4"></div>
+					<div class="rect5"></div>
+				</div>
+
+			</div>
+		</div>
+
+	<!-- 引入 ECharts 文件 -->
+	<script src="js/echarts3/echarts.js"></script>
+	<script type="text/javascript" src="js/difindex.js"></script>
+	<script type="text/javascript" src="js/difcharts.js"></script>
+</body>
+
+</html>
