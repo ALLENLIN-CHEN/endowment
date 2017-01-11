@@ -13,6 +13,7 @@ public class Hospital_2 {
     private Integer  hospital_num;
     private Integer  hospital_sim;
     private Integer  hospital_sum;
+    private String  area;
     private Integer  rate_desc;
 
     public Integer getperson_num() {
@@ -47,6 +48,9 @@ public class Hospital_2 {
     }
     public Integer getSum(){
         return hospital_sum;
+    }
+    public String getarea() {
+        return area;
     }
     public Integer getRate(int days){
         rate_desc = Integer.valueOf(1000*getSim()*days/getSum());

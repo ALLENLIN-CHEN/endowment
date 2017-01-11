@@ -7,17 +7,17 @@
 		select year(operation_time) as "year",sex as "sex",count(distinct person.social_security_card) as "person_num"
 		from hospital_business inner join person
 		on hospital_business.social_security_card=person.social_security_card
-		where operation = "就医服务"
+		where operation = "就医服务" ${mapclick}
 		group by year,sex
 		order by year,sex
 	</select>
 	<select id="selectHospital_2_4" parameterType="java.util.Map" resultType="org.scut.mychart.model.Hospital_2" statementType="STATEMENT">
-        select year(operation_time) as "year",count(distinct hospital_business.social_security_card) as "person_num",count(person.social_security_card) as "person_sum"
+        select year(operation_time) as "year" ${select} ,count(distinct hospital_business.social_security_card) as "person_num",count(person.social_security_card) as "person_sum"
 		from hospital_business inner join person
 		on hospital_business.social_security_card=person.social_security_card and hospital_business.area = person.area
-		where operation = "就医服务" and hospital_business.area = "${address}"
-		group by year
-		order by year
+		where operation = "就医服务"
+		group by year ${area}
+		order by year ${area}
 	</select>
 	<select id="selectHospital_2_5" parameterType="java.util.Map" resultType="org.scut.mychart.model.Hospital_2" statementType="STATEMENT">
 		select year(operation_time) as "year",
@@ -28,16 +28,18 @@
 		count(distinct person.social_security_card) as "person_num"
 		from hospital_business inner join person
 		on hospital_business.social_security_card=person.social_security_card
-		where operation = "就医服务"
+		where operation = "就医服务" ${mapclick}
 		group by year,age
 		order by year,age
 	</select>
 	<select id="selectHospital_2_6810" parameterType="java.util.Map" resultType="org.scut.mychart.model.Hospital_2" statementType="STATEMENT">
-		select year(operation_time) as "year"${where},count(*) as hospital_num
+		select * from
+		(select year(operation_time) as "year" ${where},count(*) as hospital_num
+		,ROW_NUMBER() over(partition by year(operation_time) order by count(*) DESC) rownum
 		from hospital_business
-		where operation = "就医服务"
-		group by year${group}
-		order by year,hospital_num DESC
+		where operation = "就医服务" ${mapclick}
+		group by year ${group}) as A
+		where 10>=A.rownum
 	</select>
 	<select id="selectHospital_2_7911" parameterType="java.util.Map" resultType="org.scut.mychart.model.Hospital_2" statementType="STATEMENT">
 		select ${type},A.hospital_num as hospital_sim,B.hospital_num as hospital_sum

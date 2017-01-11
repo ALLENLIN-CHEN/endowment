@@ -39,7 +39,7 @@ public class Hospital_2ServiceImpl implements Hospital_2Service {
 			case 2:
 			case 3:return this.hospitao_2Dao.selectHospital_2_2(new HashMap());
 			case 4:{
-				param.put("address",p[0]);
+				param.put("address","and hospital_business.area = \""+p[0]+"\"");
 				return this.hospitao_2Dao.selectHospital_2_4(param);
 			}
 			case 5:return this.hospitao_2Dao.selectHospital_2_5(new HashMap());
