@@ -1,19 +1,11 @@
 package org.scut.mychart.service.impl;
 
-import com.github.abel533.echarts.Option;
-import com.github.abel533.echarts.axis.CategoryAxis;
-import com.github.abel533.echarts.axis.ValueAxis;
-import com.github.abel533.echarts.code.*;
-import com.github.abel533.echarts.data.PointData;
-import com.github.abel533.echarts.feature.MagicType;
-import com.github.abel533.echarts.json.GsonOption;
-import com.github.abel533.echarts.json.GsonUtil;
-import com.github.abel533.echarts.series.Bar;
-import com.github.abel533.echarts.series.Funnel;
-import com.github.abel533.echarts.series.Line;
+
 import org.scut.mychart.mapper.IndustryMapper;
+import org.scut.mychart.mapperKylin.IndustryMapperKylin;
 import org.scut.mychart.model.IndustryModel;
 import org.scut.mychart.service.IndustryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,8 +15,12 @@ import java.util.*;
 @Service("industryServiceImpl")
 public class IndustryServiceImpl implements IndustryService {
 
-    @Resource
-    private IndustryMapper industryMapper;
+    @Autowired
+//    private IndustryMapper industryMapper;
+    private IndustryMapperKylin industryMapper;
+
+    private DecimalFormat df   = new DecimalFormat("######0.00");
+
     public HashMap<String, List<IndustryModel>> getMapResult(List<IndustryModel> total) {
         HashMap<String, List<IndustryModel>> result = new HashMap<String, List<IndustryModel>>();
 
@@ -150,36 +146,39 @@ public class IndustryServiceImpl implements IndustryService {
             List<IndustryModel> industryModelList=industryOrderResult.get(year);
             List<String> industryCategory=new ArrayList<>();
             List<Double> industryDataList=new ArrayList<>();
-            Double industryDataMax=industryModelList.get(0).getCardinality();
+            Double industryDataMax=new Double(df.format(industryModelList.get(0).getCardinality()));
            for(int j=0;j<industryModelList.size();j++){
                if(j==top)break;
+               Double cardinality=new Double(df.format(industryModelList.get(j).getCardinality()));
                industryCategory.add(industryModelList.get(j).getIndustry_code());
-               industryDataList.add(industryModelList.get(j).getCardinality());
-               if(industryDataMax<industryModelList.get(j).getCardinality())industryDataMax=industryModelList.get(j).getCardinality();
+               industryDataList.add(cardinality);
+               if(industryDataMax<cardinality)industryDataMax=cardinality;
            }
 
             //获取单位top10
             List<IndustryModel> unitModelList=unitOrderResult.get(year);
             List<String> unitCategory=new ArrayList<>();
             List<Double> unitDataList=new ArrayList<>();
-            Double unitDataMax=unitModelList.get(0).getCardinality();
+            Double unitDataMax=new Double(df.format(unitModelList.get(0).getCardinality()));
             for(int j=0;j<unitModelList.size();j++){
                 if(j==top)break;
+                Double cardinality=new Double(df.format(unitModelList.get(j).getCardinality()));
                 unitCategory.add(unitModelList.get(j).getCompany_type());
-                unitDataList.add(unitModelList.get(j).getCardinality());
-                if(unitDataMax<unitModelList.get(j).getCardinality())unitDataMax=unitModelList.get(j).getCardinality();
+                unitDataList.add(cardinality);
+                if(unitDataMax<cardinality)unitDataMax=cardinality;
             }
 
             //获取经济top10
             List<IndustryModel> economyModelList=economyOrderResult.get(year);
             List<String> economyCategory=new ArrayList<>();
             List<Double> economyDataList=new ArrayList<>();
-            Double economyDataMax=economyModelList.get(0).getCardinality();
+            Double economyDataMax=new Double(df.format(economyModelList.get(0).getCardinality()));
             for(int j=0;j<economyModelList.size();j++){
                 if(j==top)break;
+                Double cardinality=new Double(df.format(economyModelList.get(j).getCardinality()));
                 economyCategory.add(economyModelList.get(j).getFinancial_type());
-                economyDataList.add(economyModelList.get(j).getCardinality());
-                if(economyDataMax<economyModelList.get(j).getCardinality())economyDataMax=economyModelList.get(j).getCardinality();
+                economyDataList.add(cardinality);
+                if(economyDataMax<cardinality)economyDataMax=cardinality;
             }
 
             //获取人数变化、男女占比
@@ -226,7 +225,7 @@ public class IndustryServiceImpl implements IndustryService {
             Double rateTotal=null;
             Double rateMale=null;
             Double rateFemale=null;
-            DecimalFormat df   = new DecimalFormat("######0.00");
+
             for(int j=0;j<personNumList.size();j++){
                 if(personNumList.get(j).getSex().equals("男")){
                     maleNum=personNumList.get(j).getPerson_num();
