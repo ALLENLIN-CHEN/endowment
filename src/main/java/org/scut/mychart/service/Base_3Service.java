@@ -10,5 +10,7 @@ public interface Base_3Service {
     public Map<String, Object> getBase_3_2ChartOption(String financial_type);
     public Map<String, Object> getBase_3_3ChartOption(String financial_type);
     public Map<String, Object> getBase_3_4ChartOption();
+    public Map<String, Object> getMaptestChartOption(String mapclicked);
+    public Map<String, Object> getMaptest();
     public List<String> getBase_3Financial();
 }

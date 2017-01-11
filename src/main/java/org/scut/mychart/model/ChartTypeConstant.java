@@ -116,6 +116,9 @@ public interface ChartTypeConstant {
 	//hospital_2_11
 	public static final String HOSPITAL_2_11_REDIS = "HOSPITAL_2_11_REDIS";
 
+	//hospital_2_maptest
+	public static final String HOSPITAL_2_maptest_REDIS = "HOSPITAL_2_maptest_REDIS";
+
     //异地就医申请男女数量柱状图
 	public static final  String EXTERNAL_REDIS ="EXTERNAL_REDIS";
 
