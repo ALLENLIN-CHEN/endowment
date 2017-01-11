@@ -455,7 +455,7 @@ function gettest(data){
     var age3 = [];
     var age4 = [];
     var radar_data = [];
-	$.get('../jsons/孝感市.json', function (geoJson) {
+	$.get('jsons/孝感市.json', function (geoJson) {
         for(var i in times){
             var xiaogan_geo = [
                 {name: '应城市', value: [113.573842,30.939038,data.hos_2[i].应城市]},

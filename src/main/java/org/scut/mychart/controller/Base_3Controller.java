@@ -44,11 +44,11 @@ public class Base_3Controller {
         return data;
     }
 
-//    @RequestMapping("/test")
-//    @ResponseBody
-//    public Map<String, Object> get_test() {
-//        Map<String, Object> data = this.base_3Service.getMaptest();
-//        return data;
-//    }
+    @RequestMapping("/test")
+    @ResponseBody
+    public Map<String, Object> get_test() {
+        Map<String, Object> data = this.base_3Service.getMaptest();
+        return data;
+    }
 }   
 
