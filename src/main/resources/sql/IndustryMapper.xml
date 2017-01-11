@@ -49,7 +49,7 @@
 -- 		where industry_code = "租赁和商务服务业"
 		where industry_code = "${industry_code}"
 		group by year,age
-		order by year,age
+		order by year,person_num
 	</select>
 	<select id="selectByAgeAll" parameterType="java.util.Map" resultType="org.scut.mychart.model.IndustryModel" statementType="STATEMENT">
 		select year(base_date) as "year",
@@ -64,24 +64,24 @@
 		from company_social_security inner join person
 		on company_social_security.social_security_card=person.social_security_card
 		group by year,age
-		order by year,age
+		order by year,person_num
 	</select>
 	<select id="selectIndustryOrderByCardinality" parameterType="java.util.Map" resultType="org.scut.mychart.model.IndustryModel" statementType="STATEMENT">
-		select year(base_date) as "year",industry_code,avg(social_insurance_base) as cardinality
+		select year(base_date) as "year",industry_code,sum(social_insurance_base)/count(DISTINCT social_security_card) as cardinality
 		from company_social_security
 		group by year,industry_code
 		order by year,cardinality DESC
 	</select>
 
 	<select id="selectCompanyOrderByCardinality" parameterType="java.util.Map" resultType="org.scut.mychart.model.IndustryModel" statementType="STATEMENT">
-		select year(base_date) as "year",company_type,avg(social_insurance_base) as cardinality
+		select year(base_date) as "year",company_type,sum(social_insurance_base)/count(DISTINCT social_security_card) as cardinality
 		from company_social_security
 		group by year,company_type
 		order by year,cardinality DESC
 	</select>
 
 	<select id="selectFinancialOrderByCardinality" parameterType="java.util.Map" resultType="org.scut.mychart.model.IndustryModel" statementType="STATEMENT">
-		select year(base_date) as "year",financial_type,avg(social_insurance_base) as cardinality
+		select year(base_date) as "year",financial_type,sum(social_insurance_base)/count(DISTINCT social_security_card) as cardinality
 		from company_social_security
 		group by year,financial_type
 		order by year,cardinality DESC
