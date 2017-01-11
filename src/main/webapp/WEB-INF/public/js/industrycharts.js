@@ -193,12 +193,12 @@ function getIndustryFunnel(res) {
 			        	type: 'funnel',
 						 label: {
 						 	normal: {
-							 	formatter: function (params) {
-								 return params.name + ": " + params.value + '%';
-							 	},
-								 position: 'center',
+							 	// formatter: function (params) {
+								 // return params.name + ": " + params.value + '%';
+							 	// },
+								 // position: 'center',
 								textStyle:{
-									fontSize: 16,
+									// fontSize: 16,
 									// color:'#00a2ca'
 								}
 						 	}
