@@ -7,6 +7,7 @@ $.ajax({
     url:"charts/industry/getThemeOption",
     dataType: 'json',
     success: function(res) {
+        $('.loading').hide();
         option=handleCharts(res.data);
         myChart.setOption(option);
     },
