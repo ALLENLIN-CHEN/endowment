@@ -105,7 +105,31 @@ $(document).on('click', '.samFinancial_wrap_big .search', function() {
     });
 });
 
+/*先输入数据*/
 function showCharts(data) {
+
+    year++;
+    document.getElementById('time').innerHTML=year;
+
+    bar1(year,data);
+    bar2(year,data);
+    bar3(year,data);
+    bar4(year,data);
+    bar5(year,data);
+    bar6(year,data);
+    pie1(year,data);
+    pie2(year,data);
+    pie3(year,data);
+    news(year,data);
+    //无动效数字插入
+    //magic_number(year,data);
+    //有动效
+    value(year,data);
+    showChartsTime(data);
+
+}
+/*设置延时*/
+function showChartsTime(data) {
     setInterval(function() {
 
         //时间显示
@@ -131,7 +155,7 @@ function showCharts(data) {
         //magic_number(year,data);
         //有动效
         value(year,data);
-    }, 20000);
+    }, 10000);
 
 }
 
