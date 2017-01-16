@@ -109,6 +109,9 @@ $(document).on('click', '.samFinancial_wrap_big .search', function() {
 function showCharts(data) {
 
     year++;
+    if(year > 2015) {
+        year = 2010;
+    }
     document.getElementById('time').innerHTML=year;
 
     bar1(year,data);
