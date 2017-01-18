@@ -82,6 +82,7 @@ function getCompanyLine(data) {
 	    yAxis : [
 	        {
 	            type : 'value',
+	            scale: true,
 	            axisLabel:{
 					formatter:function(value){
 						return value + '人';
@@ -274,7 +275,8 @@ function getCompanyBar(data) {
 			    ],
 			    yAxis : [
 			       {
-			           type : 'value'
+			           type : 'value',
+			           scale: true
 			       }
 			    ],
 				grid: {
